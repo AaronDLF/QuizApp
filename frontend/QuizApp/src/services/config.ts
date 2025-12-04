@@ -7,13 +7,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Configuración de la API según plataforma
 const getApiUrl = (): string => {
-  // Tu IP local - CAMBIA ESTO si tu IP cambia
   const LOCAL_IP = '192.168.1.9';
 
   if (Platform.OS === 'web') {
     return 'http://127.0.0.1:8000';
   }
-  // Para Android (emulador o dispositivo físico) e iOS, usar IP local
   return `http://${LOCAL_IP}:8000`;
 };
 

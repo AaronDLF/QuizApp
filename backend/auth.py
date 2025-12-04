@@ -1,3 +1,4 @@
+import os
 import bcrypt
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
@@ -5,15 +6,22 @@ from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
+from dotenv import load_dotenv
 
 from database import session_local
 import models
 from schemas.user import TokenData
 
+# Cargar variables de entorno
+load_dotenv('.env.local')
+
 # Configuración de seguridad
-SECRET_KEY = "tu_clave_secreta_muy_segura_cambiar_en_produccion"  # Cambiar en producción
+SECRET_KEY = os.getenv('SECRET_KEY')
+if not SECRET_KEY:
+    raise ValueError("SECRET_KEY no está configurada en .env.local")
+
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 horas
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
 # OAuth2
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
