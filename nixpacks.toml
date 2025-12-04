@@ -1,8 +1,10 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "postgresql"]
+nixPkgs = ["python312Full", "postgresql"]
+aptPkgs = ["python3-pip"]
 
 [phases.install]
-cmds = ["cd backend && python -m pip install -r requirements.txt"]
+dependsOn = ["setup"]
+cmds = ["pip install --upgrade pip", "pip install -r backend/requirements.txt"]
 
 [start]
-cmd = "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+cmd = "cd backend && uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
