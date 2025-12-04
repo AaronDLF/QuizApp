@@ -2,6 +2,9 @@
  * Utilidades generales de la aplicación
  */
 
+// Re-exportar utilidades responsivas del theme
+export { normalize, wp, hp } from '../constants/theme';
+
 /**
  * Mezcla un array usando el algoritmo Fisher-Yates
  */
@@ -79,14 +82,14 @@ export const validateTimeInput = (value: string): {
 };
 
 /**
- * Obtiene un emoji basado en el puntaje
+ * Obtiene el nombre de icono Ionicons basado en el puntaje
  */
-export const getScoreEmoji = (score: number): string => {
-  if (score >= 90) return '🏆';
-  if (score >= 70) return '🎉';
-  if (score >= 50) return '👍';
-  if (score >= 30) return '📚';
-  return '💪';
+export const getScoreIcon = (score: number): string => {
+  if (score >= 90) return 'trophy';
+  if (score >= 70) return 'ribbon';
+  if (score >= 50) return 'thumbs-up';
+  if (score >= 30) return 'book';
+  return 'fitness';
 };
 
 /**

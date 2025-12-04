@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Pressable, TextInput, Platform, ActivityIndicat
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import { BlurView } from 'expo-blur';
+import { Ionicons } from '@expo/vector-icons';
 import { useState, useMemo } from 'react';
 import { register } from '../src/services/api';
 import { useTheme } from '../src/context/ThemeContext';
@@ -265,9 +266,12 @@ export default function Register() {
         <View style={styles.requirementsContainer}>
           {passwordValidation.map((req, index) => (
             <View key={index} style={styles.requirementRow}>
-              <Text style={[styles.checkmark, req.isValid ? styles.valid : styles.invalid]}>
-                {req.isValid ? '✓' : '○'}
-              </Text>
+              <Ionicons
+                name={req.isValid ? 'checkmark-circle' : 'ellipse-outline'}
+                size={16}
+                color={req.isValid ? colors.success : colors.textMuted}
+                style={{ marginRight: 6 }}
+              />
               <Text style={[styles.requirementText, req.isValid ? styles.valid : styles.invalid]}>
                 {req.label}
               </Text>
@@ -290,9 +294,16 @@ export default function Register() {
           editable={!loading}
         />
         {confirmPassword.length > 0 && (
-          <Text style={[styles.matchIndicator, passwordsMatch ? styles.valid : styles.invalid]}>
-            {passwordsMatch ? '✓ Contraseñas coinciden' : '✗ Las contraseñas no coinciden'}
-          </Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
+            <Ionicons
+              name={passwordsMatch ? 'checkmark-circle' : 'close-circle'}
+              size={16}
+              color={passwordsMatch ? colors.success : colors.danger}
+            />
+            <Text style={[styles.matchIndicator, passwordsMatch ? styles.valid : styles.invalid]}>
+              {passwordsMatch ? ' Contraseñas coinciden' : ' Las contraseñas no coinciden'}
+            </Text>
+          </View>
         )}
       </View>
 

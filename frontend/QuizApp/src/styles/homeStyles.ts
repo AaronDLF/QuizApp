@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { darkTheme, spacing, borderRadius, fontSize, fontWeight } from '../constants/theme';
+import { StyleSheet, Dimensions } from 'react-native';
+import { darkTheme, spacing, borderRadius, fontSize, fontWeight, wp, normalize } from '../constants/theme';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 type ThemeColors = typeof darkTheme;
 
@@ -17,8 +19,8 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing.xl,
-    paddingTop: spacing.sm,
-    paddingBottom: spacing.lg,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xl,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
@@ -41,9 +43,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     color: colors.primary,
   },
   themeToggle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: normalize(40),
+    height: normalize(40),
+    borderRadius: normalize(20),
     backgroundColor: colors.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,16 +62,19 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   },
   scrollContent: {
     padding: spacing.xl,
-    paddingBottom: 100,
+    paddingBottom: normalize(100),
+    maxWidth: 700,
+    alignSelf: 'center',
+    width: '100%',
   },
 
   // Empty State
   emptyState: {
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: normalize(60),
   },
   emptyIcon: {
-    fontSize: 60,
+    fontSize: normalize(60),
     marginBottom: spacing.xl,
   },
   emptyText: {
@@ -87,8 +92,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   quizCard: {
     backgroundColor: colors.cardBackground,
     borderRadius: borderRadius.xxl,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
@@ -110,27 +116,22 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
 
   // Delete Button
   deleteButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: normalize(30),
+    height: normalize(30),
+    borderRadius: normalize(15),
     backgroundColor: colors.dangerLight,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  deleteButtonText: {
-    color: colors.danger,
-    fontSize: fontSize.md,
-    fontWeight: fontWeight.semibold,
   },
 
   // FAB
   fab: {
     position: 'absolute',
-    bottom: 30,
+    bottom: normalize(30),
     right: spacing.xl,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: normalize(60),
+    height: normalize(60),
+    borderRadius: normalize(30),
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
@@ -165,15 +166,15 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.modalBackground,
     borderRadius: spacing.xl,
     padding: spacing.xxl,
-    width: '100%',
-    maxWidth: 340,
+    width: wp(90),
+    maxWidth: normalize(400),
   },
   modalContentLarge: {
     backgroundColor: colors.modalBackground,
     borderRadius: spacing.xl,
     padding: spacing.xxl,
-    width: '100%',
-    maxWidth: 340,
+    width: wp(90),
+    maxWidth: normalize(400),
   },
   modalTitle: {
     fontSize: fontSize.title,
@@ -267,9 +268,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     marginBottom: spacing.sm,
   },
   optionRadio: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    width: normalize(24),
+    height: normalize(24),
+    borderRadius: normalize(12),
     borderWidth: 2,
     borderColor: colors.borderStrong,
     marginRight: spacing.sm,
@@ -279,11 +280,6 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   optionRadioSelected: {
     borderColor: colors.success,
     backgroundColor: colors.success,
-  },
-  checkmark: {
-    color: colors.textPrimary,
-    fontSize: fontSize.md,
-    fontWeight: fontWeight.bold,
   },
   optionInput: {
     flex: 1,
@@ -300,8 +296,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   cardItem: {
     backgroundColor: colors.cardBackground,
     borderRadius: borderRadius.xl,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -310,7 +307,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: spacing.sm,
-    paddingRight: 40,
+    paddingRight: normalize(40),
     gap: spacing.md,
   },
   cardNumber: {
@@ -331,15 +328,15 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   cardQuestion: {
     fontSize: fontSize.base,
     color: colors.textPrimary,
-    lineHeight: 22,
+    lineHeight: normalize(22),
   },
   cardDeleteButton: {
     position: 'absolute',
     top: spacing.md,
     right: spacing.md,
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: normalize(26),
+    height: normalize(26),
+    borderRadius: normalize(13),
     backgroundColor: colors.dangerLight,
     justifyContent: 'center',
     alignItems: 'center',
@@ -358,7 +355,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   detailText: {
     fontSize: fontSize.lg,
     color: colors.textPrimary,
-    lineHeight: 24,
+    lineHeight: normalize(24),
   },
   detailOption: {
     flexDirection: 'row',
@@ -366,9 +363,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     marginBottom: spacing.sm,
   },
   detailOptionIndicator: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
+    width: normalize(22),
+    height: normalize(22),
+    borderRadius: normalize(11),
     borderWidth: 2,
     borderColor: colors.borderStrong,
     marginRight: spacing.sm,
@@ -394,9 +391,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     marginBottom: spacing.xl,
   },
   profileAvatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: normalize(80),
+    height: normalize(80),
+    borderRadius: normalize(40),
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
@@ -407,9 +404,9 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     color: colors.textPrimary,
   },
   profileButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: normalize(40),
+    height: normalize(40),
+    borderRadius: normalize(20),
     backgroundColor: colors.primaryLight,
     justifyContent: 'center',
     alignItems: 'center',

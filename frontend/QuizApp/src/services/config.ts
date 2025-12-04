@@ -5,10 +5,23 @@
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Configuración de la API según plataforma
-const getApiUrl = (): string => {
-  const LOCAL_IP = '192.168.1.9';
+// URL de producción en Railway
+const PRODUCTION_URL = 'https://quizapp-production-260a.up.railway.app';
 
+// URL local para desarrollo
+const LOCAL_IP = '192.168.1.9';
+
+// Configuración de la API según entorno y plataforma
+const getApiUrl = (): string => {
+  // @ts-ignore - __DEV__ es una variable global de React Native
+  const isDev = typeof __DEV__ !== 'undefined' ? __DEV__ : process.env.NODE_ENV === 'development';
+
+  // En producción (APK), siempre usar Railway
+  if (!isDev) {
+    return PRODUCTION_URL;
+  }
+
+  // En desarrollo, usar localhost/IP local
   if (Platform.OS === 'web') {
     return 'http://127.0.0.1:8000';
   }

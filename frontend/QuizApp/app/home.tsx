@@ -1,5 +1,6 @@
 import { View, Text, Pressable, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState, useEffect, useMemo, useRef } from 'react';
 
@@ -73,14 +74,14 @@ export default function Home() {
   // Form states
   const [newQuizTitle, setNewQuizTitle] = useState('');
   const [newCardQuestion, setNewCardQuestion] = useState('');
-  const [newCardAnswerType, setNewCardAnswerType] = useState<AnswerType>('text');
+  const [newCardAnswerType, setNewCardAnswerType] = useState<AnswerType>('options');
   const [newCardTextAnswer, setNewCardTextAnswer] = useState('');
   const [newCardOptions, setNewCardOptions] = useState(['', '', '', '']);
   const [newCardCorrectOption, setNewCardCorrectOption] = useState(0);
 
   // Edit form states
   const [editCardQuestion, setEditCardQuestion] = useState('');
-  const [editCardAnswerType, setEditCardAnswerType] = useState<AnswerType>('text');
+  const [editCardAnswerType, setEditCardAnswerType] = useState<AnswerType>('options');
   const [editCardTextAnswer, setEditCardTextAnswer] = useState('');
   const [editCardOptions, setEditCardOptions] = useState(['', '', '', '']);
   const [editCardCorrectOption, setEditCardCorrectOption] = useState(0);
@@ -521,19 +522,19 @@ export default function Home() {
       <SafeAreaView style={styles.container} edges={['top']}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>📚 Mis Quizzes</Text>
+          <Text style={styles.title}>Mis Quizzes</Text>
           <View style={styles.headerActions}>
             <Pressable
               style={[styles.themeToggle, { backgroundColor: colors.successLight }]}
               onPress={() => setShowJoinModal(true)}
             >
-              <Text style={styles.themeToggleText}>🎮</Text>
+              <Ionicons name="game-controller" size={20} color={colors.success} />
             </Pressable>
             <Pressable style={styles.themeToggle} onPress={toggleTheme}>
-              <Text style={styles.themeToggleText}>{isDark ? '☀️' : '🌙'}</Text>
+              <Ionicons name={isDark ? 'sunny' : 'moon'} size={20} color={colors.textPrimary} />
             </Pressable>
             <Pressable style={styles.profileButton} onPress={handleOpenProfile}>
-              <Text style={styles.profileButtonText}>👤</Text>
+              <Ionicons name="person" size={20} color={colors.textPrimary} />
             </Pressable>
           </View>
         </View>
@@ -638,11 +639,11 @@ export default function Home() {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <Pressable onPress={() => setSelectedQuiz(null)}>
-          <Text style={styles.backButton}>← Volver</Text>
+        <Pressable onPress={() => setSelectedQuiz(null)} style={styles.themeToggle}>
+          <Ionicons name="arrow-back" size={20} color={colors.textPrimary} />
         </Pressable>
         <Text style={styles.titleSmall}>{selectedQuiz.title}</Text>
-        <View style={{ width: 50 }} />
+        <View style={{ width: 40 }} />
       </View>
 
       {/* Error message */}

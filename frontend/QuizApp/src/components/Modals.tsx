@@ -1,85 +1,14 @@
 import React, { useMemo } from 'react';
-import { View, Text, Pressable, TextInput, Modal, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, TextInput, Modal, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
-import { formatDate } from '../utils';
 import type {
   NewQuizModalProps,
   NewCardModalProps,
   CardDetailModalProps,
-  UserProfileModalProps,
   EditCardModalProps,
 } from '../types/components';
-
-// Modal de Perfil de Usuario
-export const UserProfileModal: React.FC<UserProfileModalProps> = ({
-  visible,
-  user,
-  loading,
-  onClose,
-  onLogout,
-}) => {
-  const { colors } = useTheme();
-  const styles = useMemo(() => createHomeStyles(colors), [colors]);
-
-  return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContentLarge}>
-          <Text style={styles.modalTitle}>👤 Mi Perfil</Text>
-
-          {loading ? (
-            <View style={{ padding: 40, alignItems: 'center' }}>
-              <ActivityIndicator size="large" color={colors.primary} />
-              <Text style={{ color: colors.textPrimary, marginTop: 16 }}>Cargando...</Text>
-            </View>
-          ) : user ? (
-            <>
-              <View style={styles.profileAvatarContainer}>
-                <View style={styles.profileAvatar}>
-                  <Text style={styles.profileAvatarText}>
-                    {user.name.charAt(0).toUpperCase()}
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.detailSection}>
-                <Text style={styles.detailLabel}>Nombre</Text>
-                <Text style={styles.detailText}>{user.name}</Text>
-              </View>
-
-              <View style={styles.detailSection}>
-                <Text style={styles.detailLabel}>Email</Text>
-                <Text style={styles.detailText}>{user.email}</Text>
-              </View>
-
-              <View style={styles.detailSection}>
-                <Text style={styles.detailLabel}>Miembro desde</Text>
-                <Text style={styles.detailText}>{formatDate(user.created_at)}</Text>
-              </View>
-
-              <View style={[styles.modalButtons, { marginTop: 24 }]}>
-                <Pressable style={styles.modalButtonCancel} onPress={onLogout}>
-                  <Text style={styles.modalButtonText}>🚪 Salir</Text>
-                </Pressable>
-                <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
-                  <Text style={styles.modalButtonText}>Cerrar</Text>
-                </Pressable>
-              </View>
-            </>
-          ) : (
-            <View style={{ padding: 20, alignItems: 'center' }}>
-              <Text style={{ color: colors.danger }}>Error al cargar perfil</Text>
-              <Pressable style={[styles.modalButtonConfirm, { marginTop: 16 }]} onPress={onClose}>
-                <Text style={styles.modalButtonText}>Cerrar</Text>
-              </Pressable>
-            </View>
-          )}
-        </View>
-      </View>
-    </Modal>
-  );
-};
 
 // Modal para crear nuevo Quiz
 export const NewQuizModal: React.FC<NewQuizModalProps> = ({
@@ -163,7 +92,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
                 ]}
                 onPress={() => onAnswerTypeChange('text')}
               >
-                <Text style={styles.typeOptionText}>📝 Texto</Text>
+                <Text style={styles.typeOptionText}>Texto</Text>
               </Pressable>
               <Pressable
                 style={[
@@ -172,7 +101,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
                 ]}
                 onPress={() => onAnswerTypeChange('options')}
               >
-                <Text style={styles.typeOptionText}>🔘 Opciones</Text>
+                <Text style={styles.typeOptionText}>Opciones</Text>
               </Pressable>
             </View>
 
@@ -202,7 +131,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
                       correctOption === index && styles.optionRadioSelected
                     ]}>
                       {correctOption === index && (
-                        <Text style={styles.checkmark}>✓</Text>
+                        <Ionicons name="checkmark" size={14} color="#FFF" />
                       )}
                     </View>
                     <TextInput
@@ -246,7 +175,9 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContentLarge}>
-          <Text style={styles.modalTitle}>📋 Detalle de Card</Text>
+          <Text style={styles.modalTitle}>
+            <Ionicons name="document-text-outline" size={20} /> Detalle de Card
+          </Text>
 
           {card && (
             <>
@@ -269,7 +200,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                         card.correctOption === index && styles.detailOptionCorrect
                       ]}>
                         {card.correctOption === index && (
-                          <Text style={styles.checkmark}>✓</Text>
+                          <Ionicons name="checkmark" size={14} color="#FFF" />
                         )}
                       </View>
                       <Text style={[
@@ -287,7 +218,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
           <View style={[styles.modalButtons, { marginTop: 20 }]}>
             <Pressable style={styles.modalButtonCancel} onPress={onEdit}>
-              <Text style={styles.modalButtonText}>✏️ Editar</Text>
+              <Text style={styles.modalButtonText}><Ionicons name="create-outline" size={14} /> Editar</Text>
             </Pressable>
             <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
               <Text style={styles.modalButtonText}>Cerrar</Text>
@@ -323,7 +254,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
-            <Text style={styles.modalTitle}>✏️ Editar Card</Text>
+            <Text style={styles.modalTitle}><Ionicons name="create-outline" size={20} /> Editar Card</Text>
 
             <Text style={styles.inputLabel}>Pregunta</Text>
             <TextInput
@@ -344,7 +275,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
                 ]}
                 onPress={() => onAnswerTypeChange('text')}
               >
-                <Text style={styles.typeOptionText}>📝 Texto</Text>
+                <Text style={styles.typeOptionText}>Texto</Text>
               </Pressable>
               <Pressable
                 style={[
@@ -353,7 +284,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
                 ]}
                 onPress={() => onAnswerTypeChange('options')}
               >
-                <Text style={styles.typeOptionText}>🔘 Opciones</Text>
+                <Text style={styles.typeOptionText}>Opciones</Text>
               </Pressable>
             </View>
 
@@ -383,7 +314,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
                       correctOption === index && styles.optionRadioSelected
                     ]}>
                       {correctOption === index && (
-                        <Text style={styles.checkmark}>✓</Text>
+                        <Ionicons name="checkmark" size={14} color="#FFF" />
                       )}
                     </View>
                     <TextInput

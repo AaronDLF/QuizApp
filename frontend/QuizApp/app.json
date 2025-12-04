@@ -21,7 +21,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.aarondlf.QuizApp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -30,6 +31,12 @@
     "scheme": "quizapp",
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c4f161ea-9f87-468c-8e33-88aedbb5fa57"
+      }
+    }
   }
 }

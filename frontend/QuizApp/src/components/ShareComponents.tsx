@@ -9,6 +9,7 @@ import {
   Share,
   Platform,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
 import {
@@ -100,7 +101,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>🔗 Compartir</Text>
+          <Text style={styles.modalTitle}><Ionicons name="share-social" size={20} /> Compartir</Text>
 
           <Text style={{
             fontSize: 18,
@@ -162,9 +163,12 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   }}
                   onPress={handleCopyCode}
                 >
-                  <Text style={{ color: '#FFF', fontWeight: '600' }}>
-                    {copied ? '✓ Copiado' : '📋 Copiar código'}
-                  </Text>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons name={copied ? 'checkmark' : 'copy-outline'} size={16} color="#FFF" />
+                    <Text style={{ color: '#FFF', fontWeight: '600', marginLeft: 6 }}>
+                      {copied ? 'Copiado' : 'Copiar código'}
+                    </Text>
+                  </View>
                 </Pressable>
 
                 <Pressable
@@ -326,7 +330,7 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>🎮 Unirse a Quiz</Text>
+          <Text style={styles.modalTitle}><Ionicons name="enter" size={20} /> Unirse a Quiz</Text>
 
           <Text style={{
             color: colors.textSecondary,
@@ -371,14 +375,17 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
               padding: 16,
               marginTop: 16,
             }}>
-              <Text style={{
-                fontSize: 16,
-                fontWeight: '600',
-                color: colors.textPrimary,
-                marginBottom: 4,
-              }}>
-                ✓ {quizInfo.title}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                <Ionicons name="checkmark-circle" size={18} color={colors.success} />
+                <Text style={{
+                  fontSize: 16,
+                  fontWeight: '600',
+                  color: colors.textPrimary,
+                  marginLeft: 6,
+                }}>
+                  {quizInfo.title}
+                </Text>
+              </View>
               <Text style={{ color: colors.textSecondary }}>
                 Por: {quizInfo.owner_name}
               </Text>
@@ -403,7 +410,7 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
                 {loading ? (
                   <ActivityIndicator color="#FFF" size="small" />
                 ) : (
-                  <Text style={styles.modalButtonText}>▶️ Jugar</Text>
+                  <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Jugar</Text>
                 )}
               </Pressable>
             ) : (

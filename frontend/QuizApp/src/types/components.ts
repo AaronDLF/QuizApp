@@ -106,14 +106,6 @@ export interface CardDetailModalProps {
   onEdit: () => void;
 }
 
-export interface UserProfileModalProps {
-  visible: boolean;
-  user: User | null;
-  loading: boolean;
-  onClose: () => void;
-  onLogout: () => void;
-}
-
 export interface EditCardModalProps {
   visible: boolean;
   question: string;

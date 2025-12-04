@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import { View, Text, Pressable, ScrollView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
+import { normalize } from '../constants/theme';
 import type {
   QuizListProps,
   CardListProps,
@@ -17,7 +19,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ icon, title, subtitle, c
 
   return (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyIcon}>{icon}</Text>
+      <Ionicons name={icon as any} size={normalize(50)} color={colors.textMuted} style={{ marginBottom: 16 }} />
       <Text style={styles.emptyText}>{title}</Text>
       <Text style={styles.emptySubtext}>{subtitle}</Text>
     </View>
@@ -41,8 +43,8 @@ export const QuizList: React.FC<QuizListProps> = ({
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
       {quizzes.length === 0 ? (
         <EmptyState
-          icon="📝"
-          title="No tienes quizzes aún"
+          icon="document-text-outline"
+          title="No tienes quizzes aun"
           subtitle="Crea tu primer quiz para empezar"
           colors={colors}
         />
@@ -57,40 +59,40 @@ export const QuizList: React.FC<QuizListProps> = ({
               <Text style={styles.quizCardTitle}>{quiz.title}</Text>
               <Text style={styles.quizCardCount}>{quiz.cardCount ?? quiz.cards.length} cards</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: normalize(6) }}>
               {onShareQuiz && (
                 <Pressable
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 18,
+                    width: normalize(36),
+                    height: normalize(36),
+                    borderRadius: normalize(18),
                     backgroundColor: colors.successLight,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}
                   onPress={() => onShareQuiz(quiz)}
                 >
-                  <Text style={{ fontSize: 14 }}>🔗</Text>
+                  <Ionicons name="link" size={normalize(16)} color={colors.success} />
                 </Pressable>
               )}
               <Pressable
                 style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 18,
+                  width: normalize(36),
+                  height: normalize(36),
+                  borderRadius: normalize(18),
                   backgroundColor: colors.primaryLight,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
                 onPress={() => onPlayQuiz(quiz)}
               >
-                <Text style={{ fontSize: 16 }}>▶️</Text>
+                <Ionicons name="play" size={normalize(16)} color={colors.primary} />
               </Pressable>
               <Pressable
                 style={styles.deleteButton}
                 onPress={() => onDeleteQuiz(quiz.id)}
               >
-                <Text style={styles.deleteButtonText}>✕</Text>
+                <Ionicons name="close" size={normalize(16)} color={colors.danger} />
               </Pressable>
             </View>
           </Pressable>
@@ -115,7 +117,7 @@ export const CardList: React.FC<CardListProps> = ({
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
       {cards.length === 0 ? (
         <EmptyState
-          icon="🃏"
+          icon="help-circle-outline"
           title="No hay cards en este quiz"
           subtitle="Agrega tu primera pregunta"
           colors={colors}
@@ -143,7 +145,7 @@ export const CardList: React.FC<CardListProps> = ({
               style={styles.cardDeleteButton}
               onPress={() => onDeleteCard(card.id)}
             >
-              <Text style={styles.deleteButtonText}>✕</Text>
+              <Ionicons name="close" size={normalize(16)} color={colors.danger} />
             </Pressable>
           </Pressable>
         ))

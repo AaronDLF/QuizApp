@@ -1,3 +1,34 @@
+import { Dimensions, PixelRatio, Platform } from 'react-native';
+
+// Dimensiones de referencia (iPhone 11)
+const BASE_WIDTH = 375;
+const BASE_HEIGHT = 812;
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
+// Escalar según ancho de pantalla
+const widthScale = SCREEN_WIDTH / BASE_WIDTH;
+const heightScale = SCREEN_HEIGHT / BASE_HEIGHT;
+
+// Usar el menor para mantener proporciones, pero con límites
+const scale = Math.max(0.85, Math.min(widthScale, heightScale, 1.3));
+
+// Función para escalar tamaños de forma responsiva
+export const normalize = (size: number): number => {
+  const newSize = size * scale;
+  return Math.round(PixelRatio.roundToNearestPixel(newSize));
+};
+
+// Escalar solo ancho
+export const wp = (percentage: number): number => {
+  return SCREEN_WIDTH * (percentage / 100);
+};
+
+// Escalar solo alto
+export const hp = (percentage: number): number => {
+  return SCREEN_HEIGHT * (percentage / 100);
+};
+
 // Tema Oscuro
 export const darkTheme = {
   // Fondos
@@ -59,38 +90,38 @@ export const lightTheme = {
 // Colores por defecto (oscuro) - para compatibilidad
 export const colors = darkTheme;
 
-// Espaciados
+// Espaciados (responsivos)
 export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  xxl: 24,
+  xs: normalize(4),
+  sm: normalize(8),
+  md: normalize(12),
+  lg: normalize(16),
+  xl: normalize(20),
+  xxl: normalize(24),
 };
 
-// Radios de borde
+// Radios de borde (responsivos)
 export const borderRadius = {
-  sm: 8,
-  md: 10,
-  lg: 12,
-  xl: 14,
-  xxl: 16,
+  sm: normalize(8),
+  md: normalize(10),
+  lg: normalize(12),
+  xl: normalize(14),
+  xxl: normalize(16),
   round: 9999,
 };
 
-// Tamaños de fuente
+// Tamaños de fuente (responsivos)
 export const fontSize = {
-  xs: 11,
-  sm: 12,
-  md: 14,
-  base: 15,
-  lg: 16,
-  xl: 17,
-  xxl: 18,
-  title: 20,
-  heading: 24,
-  display: 32,
+  xs: normalize(12),
+  sm: normalize(13),
+  md: normalize(15),
+  base: normalize(16),
+  lg: normalize(17),
+  xl: normalize(18),
+  xxl: normalize(20),
+  title: normalize(22),
+  heading: normalize(26),
+  display: normalize(36),
 };
 
 // Pesos de fuente
