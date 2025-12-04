@@ -1,0 +1,130 @@
+### Variables
+@baseUrl = http://127.0.0.1:8000
+@token = {{login.response.body.access_token}}
+
+### ==================== AUTH ====================
+
+### Registrar usuario
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!",
+  "name": "Usuario Test"
+}
+
+### Login - Guarda el token automáticamente
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!"
+}
+
+### Obtener usuario actual
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### ==================== QUIZZES ====================
+
+### Obtener todos los quizzes
+GET {{baseUrl}}/quizzes/
+Authorization: Bearer {{token}}
+
+### Obtener un quiz por ID
+GET {{baseUrl}}/quizzes/1
+Authorization: Bearer {{token}}
+
+### Crear nuevo quiz
+POST {{baseUrl}}/quizzes/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Mi Quiz de Prueba"
+}
+
+### Actualizar quiz
+PUT {{baseUrl}}/quizzes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Quiz Actualizado"
+}
+
+### Eliminar quiz
+DELETE {{baseUrl}}/quizzes/1
+Authorization: Bearer {{token}}
+
+### ==================== QUESTIONS ====================
+
+### Agregar pregunta con opciones a un quiz
+POST {{baseUrl}}/quizzes/1/questions/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "question_text": "¿Cuál es la capital de Francia?",
+  "choices": [
+    {"choice_text": "Londres", "is_correct": false},
+    {"choice_text": "París", "is_correct": true},
+    {"choice_text": "Berlín", "is_correct": false},
+    {"choice_text": "Madrid", "is_correct": false}
+  ]
+}
+
+### Agregar pregunta de texto
+POST {{baseUrl}}/quizzes/1/questions/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "question_text": "¿En qué año comenzó la Segunda Guerra Mundial?",
+  "choices": [
+    {"choice_text": "1939", "is_correct": true}
+  ]
+}
+
+### Actualizar pregunta
+PUT {{baseUrl}}/questions/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "question_text": "¿Cuál es la capital de España?",
+  "choices": [
+    {"choice_text": "Barcelona", "is_correct": false},
+    {"choice_text": "Madrid", "is_correct": true},
+    {"choice_text": "Sevilla", "is_correct": false}
+  ]
+}
+
+### Eliminar pregunta
+DELETE {{baseUrl}}/questions/1
+Authorization: Bearer {{token}}
+
+### ==================== SHARE ====================
+
+### Generar código para compartir quiz
+POST {{baseUrl}}/share/1/generate-code
+Authorization: Bearer {{token}}
+
+### Revocar código de compartir
+DELETE {{baseUrl}}/share/1/revoke-code
+Authorization: Bearer {{token}}
+
+### Obtener info de quiz por código
+GET {{baseUrl}}/share/code/ABC123
+Authorization: Bearer {{token}}
+
+### Obtener quiz completo por código (para jugar)
+GET {{baseUrl}}/share/code/ABC123/full
+Authorization: Bearer {{token}}
+
+### Obtener mis quizzes compartidos
+GET {{baseUrl}}/share/my-shared
+Authorization: Bearer {{token}}
