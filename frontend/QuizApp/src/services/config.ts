@@ -16,12 +16,16 @@ const getApiUrl = (): string => {
   // @ts-ignore - __DEV__ es una variable global de React Native
   const isDev = typeof __DEV__ !== 'undefined' ? __DEV__ : process.env.NODE_ENV === 'development';
 
-  // En producción (APK), siempre usar Railway
-  if (!isDev) {
+  // FORZAR PRODUCCIÓN: Siempre usar Railway (útil para pruebas con Expo Go tunnel)
+  // Cambiar a 'false' para usar backend local en desarrollo
+  const useProduction = true;
+
+  // En producción (APK) o si está forzado, usar Railway
+  if (!isDev || useProduction) {
     return PRODUCTION_URL;
   }
 
-  // En desarrollo, usar localhost/IP local
+  // En desarrollo local, usar localhost/IP local
   if (Platform.OS === 'web') {
     return 'http://127.0.0.1:8000';
   }
