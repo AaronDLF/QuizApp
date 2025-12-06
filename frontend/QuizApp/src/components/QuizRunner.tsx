@@ -422,6 +422,17 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
   const [shuffleOptions, setShuffleOptions] = useState(false);
   const [timeError, setTimeError] = useState<string | null>(null);
 
+  // Resetear estados cuando la modal se cierra
+  useEffect(() => {
+    if (!visible) {
+      setHasTimeLimit(false);
+      setTimeMinutes('5');
+      setShuffleQuestions(false);
+      setShuffleOptions(false);
+      setTimeError(null);
+    }
+  }, [visible]);
+
   const handleTimeChange = (value: string) => {
     setTimeMinutes(value);
     if (hasTimeLimit) {

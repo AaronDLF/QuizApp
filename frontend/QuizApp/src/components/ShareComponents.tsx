@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   View,
   Text,
@@ -36,6 +36,15 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  // Limpiar estados cuando la modal se cierra
+  useEffect(() => {
+    if (!visible) {
+      setShareCode(null);
+      setError(null);
+      setCopied(false);
+    }
+  }, [visible]);
 
   const handleGenerateCode = async () => {
     try {
@@ -275,6 +284,15 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [quizInfo, setQuizInfo] = useState<SharedQuizInfo | null>(null);
+
+  // Limpiar estados cuando la modal se cierra
+  useEffect(() => {
+    if (!visible) {
+      setCode('');
+      setError(null);
+      setQuizInfo(null);
+    }
+  }, [visible]);
 
   const handleCodeChange = (text: string) => {
     // Solo permitir letras y números, convertir a mayúsculas
