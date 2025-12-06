@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, Pressable, TextInput, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Pressable, TextInput, Platform, ActivityIndicator, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Link, useRouter } from 'expo-router';
 import { BlurView } from 'expo-blur';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { login } from '../src/services/api';
 import { useTheme } from '../src/context/ThemeContext';
 import { darkTheme } from '../src/constants/theme';
@@ -103,6 +103,16 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Permitir que el botón de retroceso cierre la app desde login
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Retornar false permite el comportamiento por defecto (cerrar app)
+      return false;
+    });
+
+    return () => backHandler.remove();
+  }, []);
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {

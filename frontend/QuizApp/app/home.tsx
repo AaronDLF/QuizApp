@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, ActivityIndicator, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -102,6 +102,21 @@ export default function Home() {
 
     initAuth();
   }, []);
+
+  // Manejar el gesto/botón de retroceso en dispositivos móviles
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Si hay un quiz seleccionado, volver a la lista de quizzes
+      if (selectedQuiz) {
+        setSelectedQuiz(null);
+        return true; // Prevenir comportamiento por defecto
+      }
+      // Si estamos en la lista principal, bloquear retroceso (no volver a login)
+      return true; // Prevenir comportamiento por defecto
+    });
+
+    return () => backHandler.remove();
+  }, [selectedQuiz]);
 
   // Convertir de API a formato local (lista)
   const apiListToQuiz = (q: QuizListAPI): Quiz => ({
