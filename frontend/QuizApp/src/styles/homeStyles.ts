@@ -167,7 +167,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: spacing.xl,
     padding: spacing.xl,
     width: '100%',
-    maxWidth: 500,
+    maxWidth: 600,
     alignSelf: 'center',
   },
   modalContentLarge: {
@@ -175,7 +175,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: spacing.xl,
     padding: spacing.xl,
     width: '100%',
-    maxWidth: 600,
+    maxWidth: 800,
     alignSelf: 'center',
   },
   modalTitle: {
