@@ -187,11 +187,15 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                     borderRadius: 8,
                     padding: 14,
                     alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 8,
                   }}
                   onPress={handleShare}
                 >
+                  <Ionicons name="share-outline" size={18} color="#FFF" />
                   <Text style={{ color: '#FFF', fontWeight: '600' }}>
-                    📤 Compartir
+                    Compartir
                   </Text>
                 </Pressable>
 
@@ -201,12 +205,16 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                     borderRadius: 8,
                     padding: 14,
                     alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    gap: 8,
                   }}
                   onPress={handleRevokeCode}
                   disabled={loading}
                 >
+                  <Ionicons name="trash-outline" size={18} color={colors.danger} />
                   <Text style={{ color: colors.danger, fontWeight: '600' }}>
-                    🚫 Dejar de compartir
+                    Dejar de compartir
                   </Text>
                 </Pressable>
               </View>
@@ -236,6 +244,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   padding: 14,
                   alignItems: 'center',
                   marginBottom: 16,
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  gap: 8,
                 }}
                 onPress={handleGenerateCode}
                 disabled={loading}
@@ -243,9 +254,12 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                 {loading ? (
                   <ActivityIndicator color="#FFF" />
                 ) : (
-                  <Text style={{ color: '#FFF', fontWeight: '600' }}>
-                    🔑 Generar código
-                  </Text>
+                  <>
+                    <Ionicons name="key-outline" size={18} color="#FFF" />
+                    <Text style={{ color: '#FFF', fontWeight: '600' }}>
+                      Generar código
+                    </Text>
+                  </>
                 )}
               </Pressable>
             </View>
