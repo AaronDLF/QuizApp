@@ -1,9 +1,36 @@
 import { Stack } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
+import { useEffect } from 'react';
+import { Platform } from 'react-native';
 
 function StackLayout() {
   const { colors } = useTheme();
+
+  // Agregar estilos CSS globales para ocultar scrollbars en web
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const style = document.createElement('style');
+      style.textContent = `
+        /* Ocultar scrollbar en inputs multiline para todos los navegadores */
+        textarea::-webkit-scrollbar {
+          display: none;
+        }
+        textarea {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        /* Mantener bordes redondeados en inputs */
+        textarea {
+          overflow: auto;
+        }
+      `;
+      document.head.appendChild(style);
+      return () => {
+        document.head.removeChild(style);
+      };
+    }
+  }, []);
 
   return (
     <Stack

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, Pressable, TextInput, Modal, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Pressable, TextInput, Modal, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
@@ -23,30 +23,26 @@ export const NewQuizModal: React.FC<NewQuizModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
-      <TouchableWithoutFeedback onPress={onCancel}>
-        <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Nuevo Quiz</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Nombre del quiz"
-                placeholderTextColor={colors.textMuted}
-                value={title}
-                onChangeText={onTitleChange}
-              />
-              <View style={styles.modalButtons}>
-                <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
-                  <Text style={styles.modalButtonText}>Cancelar</Text>
-                </Pressable>
-                <Pressable style={styles.modalButtonConfirm} onPress={onCreate}>
-                  <Text style={styles.modalButtonText}>Crear</Text>
-                </Pressable>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </TouchableWithoutFeedback>
+      <Pressable style={styles.modalOverlay} onPress={onCancel}>
+        <Pressable style={styles.modalContent} onPress={(e) => e.stopPropagation()}>
+          <Text style={styles.modalTitle}>Nuevo Quiz</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nombre del quiz"
+            placeholderTextColor={colors.textMuted}
+            value={title}
+            onChangeText={onTitleChange}
+          />
+          <View style={styles.modalButtons}>
+            <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
+              <Text style={styles.modalButtonText}>Cancelar</Text>
+            </Pressable>
+            <Pressable style={styles.modalButtonConfirm} onPress={onCreate}>
+              <Text style={styles.modalButtonText}>Crear</Text>
+            </Pressable>
+          </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 };
@@ -73,8 +69,8 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
-        <ScrollView contentContainerStyle={styles.modalScrollContent}>
-          <View style={styles.modalContentLarge}>
+        <View style={[styles.modalContentLarge, { maxHeight: '85%' }]}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.modalTitle}>Nueva Card</Text>
 
             <Text style={styles.inputLabel}>Pregunta</Text>
@@ -85,6 +81,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
               value={question}
               onChangeText={onQuestionChange}
               multiline
+              scrollEnabled={false}
             />
 
             <Text style={styles.inputLabel}>Tipo de respuesta</Text>
@@ -119,6 +116,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
                   value={textAnswer}
                   onChangeText={onTextAnswerChange}
                   multiline
+                  scrollEnabled={false}
                 />
               </>
             ) : (
@@ -158,8 +156,8 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
                 <Text style={styles.modalButtonText}>Agregar</Text>
               </Pressable>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     </Modal>
   );
@@ -177,12 +175,10 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <TouchableWithoutFeedback onPress={onClose}>
-        <View style={styles.modalOverlay}>
-          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
-            <View style={styles.modalContentLarge}>
+      <Pressable style={styles.modalOverlay} onPress={onClose}>
+        <Pressable style={styles.modalContentLarge} onPress={(e) => e.stopPropagation()}>
               <Text style={styles.modalTitle}>
-                <Ionicons name="document-text-outline" size={20} /> Detalle de Card
+                <Ionicons name="document-text-outline" size={24} /> Detalle de Card
               </Text>
 
               {card && (
@@ -230,10 +226,8 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
                   <Text style={styles.modalButtonText}>Cerrar</Text>
                 </Pressable>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </TouchableWithoutFeedback>
+            </Pressable>
+          </Pressable>
     </Modal>
   );
 };
@@ -260,8 +254,8 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
-        <ScrollView contentContainerStyle={styles.modalScrollContent}>
-          <View style={styles.modalContentLarge}>
+        <View style={[styles.modalContentLarge, { maxHeight: '85%' }]}>
+          <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.modalTitle}><Ionicons name="create-outline" size={20} /> Editar Card</Text>
 
             <Text style={styles.inputLabel}>Pregunta</Text>
@@ -272,6 +266,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
               value={question}
               onChangeText={onQuestionChange}
               multiline
+              scrollEnabled={false}
             />
 
             <Text style={styles.inputLabel}>Tipo de respuesta</Text>
@@ -306,6 +301,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
                   value={textAnswer}
                   onChangeText={onTextAnswerChange}
                   multiline
+                  scrollEnabled={false}
                 />
               </>
             ) : (
@@ -345,8 +341,8 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
                 <Text style={styles.modalButtonText}>Guardar</Text>
               </Pressable>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     </Modal>
   );

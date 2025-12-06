@@ -154,12 +154,13 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     backgroundColor: colors.overlay,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: spacing.xl,
+    padding: spacing.lg,
   },
   modalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingVertical: spacing.xl,
+    alignItems: 'center',
+    paddingVertical: spacing.lg,
     width: '100%',
   },
   modalContent: {
@@ -167,7 +168,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: borderRadius.xxl,
     padding: spacing.xl,
     width: '100%',
-    maxWidth: 500,
+    maxWidth: 650,
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -176,7 +177,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: borderRadius.xxl,
     padding: spacing.xl,
     width: '100%',
-    maxWidth: 600,
+    maxWidth: 650,
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -228,23 +229,25 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     color: colors.textPrimary,
     borderWidth: 1,
     borderColor: colors.borderLight,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
   },
   inputMultiline: {
     minHeight: 80,
+    maxHeight: 120,
     textAlignVertical: 'top',
   },
   inputLabel: {
     fontSize: fontSize.md,
     fontWeight: fontWeight.semibold,
     color: colors.textSecondary,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.xs,
+    marginTop: spacing.xs,
   },
 
   // Type Selector
   typeSelector: {
     flexDirection: 'row',
-    marginBottom: spacing.lg,
+    marginBottom: spacing.md,
     gap: 10,
   },
   typeOption: {

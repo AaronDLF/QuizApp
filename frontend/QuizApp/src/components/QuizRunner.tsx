@@ -480,85 +480,97 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
-          <View style={styles.modalContentLarge}>
-            <Text style={styles.modalTitle}><Ionicons name="settings" size={20} /> Configurar Quiz</Text>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}><Ionicons name="settings" size={22} /> Configurar Quiz</Text>
 
             {/* Info del quiz */}
             <View style={{
               backgroundColor: colors.primaryLight,
               borderRadius: 12,
-              padding: 16,
-              marginBottom: 20,
+              padding: 18,
+              marginBottom: 24,
             }}>
               <Text style={{
-                fontSize: 18,
+                fontSize: 19,
                 fontWeight: '600',
                 color: colors.textPrimary,
-                marginBottom: 4,
+                marginBottom: 6,
               }}>
                 {quizTitle}
               </Text>
-              <Text style={{ color: colors.textSecondary }}>
+              <Text style={{
+                color: colors.textSecondary,
+                fontSize: 15,
+              }}>
                 {cardCount} pregunta{cardCount !== 1 ? 's' : ''}
               </Text>
             </View>
 
             {/* Opción: Tiempo límite */}
-            <View style={{ marginBottom: 20 }}>
+            <View style={{ marginBottom: 24 }}>
               <Pressable
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  marginBottom: 12,
+                  marginBottom: 14,
+                  paddingVertical: 4,
                 }}
                 onPress={handleToggleTimeLimit}
               >
                 <View style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: 6,
+                  width: 26,
+                  height: 26,
+                  borderRadius: 7,
                   borderWidth: 2,
                   borderColor: hasTimeLimit ? colors.primary : colors.borderStrong,
                   backgroundColor: hasTimeLimit ? colors.primary : 'transparent',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  marginRight: 12,
+                  marginRight: 14,
                 }}>
                   {hasTimeLimit && (
-                    <Ionicons name="checkmark" size={16} color="#FFF" />
+                    <Ionicons name="checkmark" size={17} color="#FFF" />
                   )}
                 </View>
-                <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+                <Text style={{
+                  color: colors.textPrimary,
+                  fontSize: 17,
+                  fontWeight: '500',
+                }}>
                   Tiempo limite
                 </Text>
               </Pressable>
 
               {hasTimeLimit && (
-                <View style={{ marginLeft: 36 }}>
+                <View style={{ marginLeft: 40, marginTop: 4 }}>
                   <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                   }}>
                     <TextInput
                       style={[styles.input, {
-                        width: 80,
+                        width: 90,
                         textAlign: 'center',
                         marginBottom: 0,
-                        marginRight: 8,
+                        marginRight: 10,
                         borderColor: timeError ? colors.danger : colors.border,
+                        fontSize: 16,
                       }]}
                       value={timeMinutes}
                       onChangeText={handleTimeChange}
                       keyboardType="decimal-pad"
                       maxLength={6}
                     />
-                    <Text style={{ color: colors.textSecondary }}>minutos</Text>
+                    <Text style={{
+                      color: colors.textSecondary,
+                      fontSize: 16,
+                    }}>minutos</Text>
                   </View>
                   {timeError && (
                     <Text style={{
                       color: colors.danger,
-                      fontSize: 12,
-                      marginTop: 4,
+                      fontSize: 13,
+                      marginTop: 6,
                     }}>
                       {timeError}
                     </Text>
@@ -572,26 +584,31 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 16,
+                marginBottom: 20,
+                paddingVertical: 4,
               }}
               onPress={() => setShuffleQuestions(!shuffleQuestions)}
             >
               <View style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
+                width: 26,
+                height: 26,
+                borderRadius: 7,
                 borderWidth: 2,
                 borderColor: shuffleQuestions ? colors.primary : colors.borderStrong,
                 backgroundColor: shuffleQuestions ? colors.primary : 'transparent',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginRight: 12,
+                marginRight: 14,
               }}>
                 {shuffleQuestions && (
-                  <Ionicons name="checkmark" size={16} color="#FFF" />
+                  <Ionicons name="checkmark" size={17} color="#FFF" />
                 )}
               </View>
-              <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+              <Text style={{
+                color: colors.textPrimary,
+                fontSize: 17,
+                fontWeight: '500',
+              }}>
                 Mezclar preguntas
               </Text>
             </Pressable>
@@ -601,26 +618,31 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: 24,
+                marginBottom: 28,
+                paddingVertical: 4,
               }}
               onPress={() => setShuffleOptions(!shuffleOptions)}
             >
               <View style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
+                width: 26,
+                height: 26,
+                borderRadius: 7,
                 borderWidth: 2,
                 borderColor: shuffleOptions ? colors.primary : colors.borderStrong,
                 backgroundColor: shuffleOptions ? colors.primary : 'transparent',
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginRight: 12,
+                marginRight: 14,
               }}>
                 {shuffleOptions && (
-                  <Ionicons name="checkmark" size={16} color="#FFF" />
+                  <Ionicons name="checkmark" size={17} color="#FFF" />
                 )}
               </View>
-              <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+              <Text style={{
+                color: colors.textPrimary,
+                fontSize: 17,
+                fontWeight: '500',
+              }}>
                 Mezclar opciones
               </Text>
             </Pressable>
@@ -635,7 +657,7 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
                 onPress={handleStart}
                 disabled={cardCount === 0 || (hasTimeLimit && !!timeError)}
               >
-                <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Iniciar</Text>
+                <Text style={styles.modalButtonText}><Ionicons name="play" size={16} /> Iniciar</Text>
               </Pressable>
             </View>
 
@@ -679,26 +701,27 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
-            <Text style={styles.modalTitle}><Ionicons name="stats-chart" size={20} /> Resultados</Text>
+            <Text style={styles.modalTitle}><Ionicons name="stats-chart" size={24} /> Resultados</Text>
 
             {/* Puntuación principal */}
             <View style={{
               alignItems: 'center',
-              marginBottom: 24,
+              marginBottom: 28,
             }}>
-              <Ionicons name={getScoreIcon(result.score) as any} size={60} color={getScoreColor(result.score)} />
+              <Ionicons name={getScoreIcon(result.score) as any} size={72} color={getScoreColor(result.score)} />
               <Text style={{
-                fontSize: 48,
+                fontSize: 56,
                 fontWeight: '700',
                 color: getScoreColor(result.score),
+                marginTop: 8,
               }}>
                 {result.score}%
               </Text>
               <Text style={{
-                fontSize: 16,
+                fontSize: 18,
                 color: colors.textSecondary,
                 textAlign: 'center',
-                marginTop: 4,
+                marginTop: 8,
               }}>
                 {getScoreMessage(result.score)}
               </Text>
@@ -708,18 +731,18 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
             <View style={{
               backgroundColor: colors.cardBackground,
               borderRadius: 12,
-              padding: 16,
-              marginBottom: 20,
+              padding: 20,
+              marginBottom: 24,
             }}>
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 12,
+                marginBottom: 14,
               }}>
-                <Text style={{ color: colors.textSecondary }}>Correctas</Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 16 }}>Correctas</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons name="checkmark" size={16} color={colors.success} />
-                  <Text style={{ color: colors.success, fontWeight: '600', marginLeft: 4 }}>
+                  <Ionicons name="checkmark" size={18} color={colors.success} />
+                  <Text style={{ color: colors.success, fontWeight: '600', marginLeft: 6, fontSize: 16 }}>
                     {result.correctAnswers}
                   </Text>
                 </View>
@@ -727,12 +750,12 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 12,
+                marginBottom: 14,
               }}>
-                <Text style={{ color: colors.textSecondary }}>Incorrectas</Text>
+                <Text style={{ color: colors.textSecondary, fontSize: 16 }}>Incorrectas</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons name="close" size={16} color={colors.danger} />
-                  <Text style={{ color: colors.danger, fontWeight: '600', marginLeft: 4 }}>
+                  <Ionicons name="close" size={18} color={colors.danger} />
+                  <Text style={{ color: colors.danger, fontWeight: '600', marginLeft: 6, fontSize: 16 }}>
                     {result.incorrectAnswers}
                   </Text>
                 </View>
@@ -740,10 +763,10 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                marginBottom: 12,
+                marginBottom: 14,
               }}>
-                <Text style={{ color: colors.textSecondary }}>Total preguntas</Text>
-                <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
+                <Text style={{ color: colors.textSecondary, fontSize: 16 }}>Total preguntas</Text>
+                <Text style={{ color: colors.textPrimary, fontWeight: '600', fontSize: 16 }}>
                   {result.totalQuestions}
                 </Text>
               </View>
@@ -751,9 +774,9 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-                <Text style={{ color: colors.textSecondary }}>Tiempo total</Text>
-                <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
-                  <Ionicons name="time-outline" size={14} /> {formatTimeVerbose(result.totalTime)}
+                <Text style={{ color: colors.textSecondary, fontSize: 16 }}>Tiempo total</Text>
+                <Text style={{ color: colors.textPrimary, fontWeight: '600', fontSize: 16 }}>
+                  <Ionicons name="time-outline" size={16} /> {formatTimeVerbose(result.totalTime)}
                 </Text>
               </View>
             </View>
@@ -761,7 +784,7 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
             {/* Botones */}
             <View style={styles.modalButtons}>
               <Pressable style={styles.modalButtonCancel} onPress={onRetry}>
-                <Text style={styles.modalButtonText}><Ionicons name="refresh" size={14} /> Reintentar</Text>
+                <Text style={styles.modalButtonText}><Ionicons name="refresh" size={16} /> Reintentar</Text>
               </Pressable>
               <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
                 <Text style={styles.modalButtonText}>Cerrar</Text>
