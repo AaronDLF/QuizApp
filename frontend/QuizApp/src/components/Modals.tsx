@@ -73,7 +73,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
-        <ScrollView style={styles.modalScrollView} contentContainerStyle={styles.modalScrollContent}>
+        <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
             <Text style={styles.modalTitle}>Nueva Card</Text>
 
@@ -260,7 +260,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
-        <ScrollView style={styles.modalScrollView} contentContainerStyle={styles.modalScrollContent}>
+        <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
             <Text style={styles.modalTitle}><Ionicons name="create-outline" size={20} /> Editar Card</Text>
 

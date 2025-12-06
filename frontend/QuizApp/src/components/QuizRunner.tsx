@@ -479,7 +479,7 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
-        <ScrollView style={styles.modalScrollView} contentContainerStyle={styles.modalScrollContent}>
+        <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
             <Text style={styles.modalTitle}><Ionicons name="settings" size={20} /> Configurar Quiz</Text>
 
@@ -677,7 +677,7 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
-        <ScrollView style={styles.modalScrollView} contentContainerStyle={styles.modalScrollContent}>
+        <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
             <Text style={styles.modalTitle}><Ionicons name="stats-chart" size={20} /> Resultados</Text>
 
