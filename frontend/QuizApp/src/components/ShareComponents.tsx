@@ -109,164 +109,168 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={handleClose}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}><Ionicons name="share-social" size={20} /> Compartir</Text>
-
-          <Text style={{
-            fontSize: 18,
-            fontWeight: '700',
-            color: colors.primary,
-            textAlign: 'center',
-            marginBottom: 20,
-          }}>
-            {quizTitle}
-          </Text>
-
-          {error && (
-            <Text style={{
-              color: colors.danger,
-              textAlign: 'center',
-              marginBottom: 12,
-            }}>
-              {error}
-            </Text>
-          )}
-
-          {shareCode ? (
-            <View>
-              {/* Código generado */}
-              <View style={{
-                backgroundColor: colors.primaryLight,
-                borderRadius: 12,
-                padding: 16,
-                marginBottom: 16,
-                alignItems: 'center',
-              }}>
-                <Text style={{
-                  fontSize: 12,
-                  color: colors.textMuted,
-                  marginBottom: 8,
-                }}>
-                  CÓDIGO PARA COMPARTIR
-                </Text>
-                <Text style={{
-                  fontSize: 32,
-                  fontWeight: '700',
-                  color: colors.primary,
-                  letterSpacing: 4,
-                }}>
-                  {shareCode}
-                </Text>
-              </View>
-
-              {/* Botones de acción */}
-              <View style={{ gap: 8, marginBottom: 16 }}>
-                <Pressable
-                  style={{
-                    backgroundColor: colors.primary,
-                    borderRadius: 8,
-                    padding: 14,
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                  }}
-                  onPress={handleCopyCode}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name={copied ? 'checkmark' : 'copy-outline'} size={16} color="#FFF" />
-                    <Text style={{ color: '#FFF', fontWeight: '600', marginLeft: 6 }}>
-                      {copied ? 'Copiado' : 'Copiar código'}
-                    </Text>
-                  </View>
-                </Pressable>
-
-                <Pressable
-                  style={{
-                    backgroundColor: colors.success,
-                    borderRadius: 8,
-                    padding: 14,
-                    alignItems: 'center',
-                  }}
-                  onPress={handleShare}
-                >
-                  <Text style={{ color: '#FFF', fontWeight: '600' }}>
-                    📤 Compartir
-                  </Text>
-                </Pressable>
-
-                <Pressable
-                  style={{
-                    backgroundColor: colors.dangerLight,
-                    borderRadius: 8,
-                    padding: 14,
-                    alignItems: 'center',
-                  }}
-                  onPress={handleRevokeCode}
-                  disabled={loading}
-                >
-                  <Text style={{ color: colors.danger, fontWeight: '600' }}>
-                    🚫 Dejar de compartir
-                  </Text>
-                </Pressable>
-              </View>
+      <TouchableWithoutFeedback onPress={handleClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}><Ionicons name="share-social" size={20} /> Compartir</Text>
 
               <Text style={{
-                fontSize: 12,
-                color: colors.textMuted,
-                textAlign: 'center',
-              }}>
-                Cualquier persona con este código podrá jugar tu quiz
-              </Text>
-            </View>
-          ) : (
-            <View>
-              <Text style={{
-                color: colors.textSecondary,
+                fontSize: 18,
+                fontWeight: '700',
+                color: colors.primary,
                 textAlign: 'center',
                 marginBottom: 20,
               }}>
-                Genera un código para que otros puedan jugar tu quiz
+                {quizTitle}
               </Text>
 
+              {error && (
+                <Text style={{
+                  color: colors.danger,
+                  textAlign: 'center',
+                  marginBottom: 12,
+                }}>
+                  {error}
+                </Text>
+              )}
+
+              {shareCode ? (
+                <View>
+                  {/* Código generado */}
+                  <View style={{
+                    backgroundColor: colors.primaryLight,
+                    borderRadius: 12,
+                    padding: 16,
+                    marginBottom: 16,
+                    alignItems: 'center',
+                  }}>
+                    <Text style={{
+                      fontSize: 12,
+                      color: colors.textMuted,
+                      marginBottom: 8,
+                    }}>
+                      CÓDIGO PARA COMPARTIR
+                    </Text>
+                    <Text style={{
+                      fontSize: 32,
+                      fontWeight: '700',
+                      color: colors.primary,
+                      letterSpacing: 4,
+                    }}>
+                      {shareCode}
+                    </Text>
+                  </View>
+
+                  {/* Botones de acción */}
+                  <View style={{ gap: 8, marginBottom: 16 }}>
+                    <Pressable
+                      style={{
+                        backgroundColor: colors.primary,
+                        borderRadius: 8,
+                        padding: 14,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}
+                      onPress={handleCopyCode}
+                    >
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name={copied ? 'checkmark' : 'copy-outline'} size={16} color="#FFF" />
+                        <Text style={{ color: '#FFF', fontWeight: '600', marginLeft: 6 }}>
+                          {copied ? 'Copiado' : 'Copiar código'}
+                        </Text>
+                      </View>
+                    </Pressable>
+
+                    <Pressable
+                      style={{
+                        backgroundColor: colors.success,
+                        borderRadius: 8,
+                        padding: 14,
+                        alignItems: 'center',
+                      }}
+                      onPress={handleShare}
+                    >
+                      <Text style={{ color: '#FFF', fontWeight: '600' }}>
+                        📤 Compartir
+                      </Text>
+                    </Pressable>
+
+                    <Pressable
+                      style={{
+                        backgroundColor: colors.dangerLight,
+                        borderRadius: 8,
+                        padding: 14,
+                        alignItems: 'center',
+                      }}
+                      onPress={handleRevokeCode}
+                      disabled={loading}
+                    >
+                      <Text style={{ color: colors.danger, fontWeight: '600' }}>
+                        🚫 Dejar de compartir
+                      </Text>
+                    </Pressable>
+                  </View>
+
+                  <Text style={{
+                    fontSize: 12,
+                    color: colors.textMuted,
+                    textAlign: 'center',
+                  }}>
+                    Cualquier persona con este código podrá jugar tu quiz
+                  </Text>
+                </View>
+              ) : (
+                <View>
+                  <Text style={{
+                    color: colors.textSecondary,
+                    textAlign: 'center',
+                    marginBottom: 20,
+                  }}>
+                    Genera un código para que otros puedan jugar tu quiz
+                  </Text>
+
+                  <Pressable
+                    style={{
+                      backgroundColor: colors.primary,
+                      borderRadius: 8,
+                      padding: 14,
+                      alignItems: 'center',
+                      marginBottom: 16,
+                    }}
+                    onPress={handleGenerateCode}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <ActivityIndicator color="#FFF" />
+                    ) : (
+                      <Text style={{ color: '#FFF', fontWeight: '600' }}>
+                        🔑 Generar código
+                      </Text>
+                    )}
+                  </Pressable>
+                </View>
+              )}
+
+              {/* Botón cerrar */}
               <Pressable
                 style={{
-                  backgroundColor: colors.primary,
-                  borderRadius: 8,
-                  padding: 14,
+                  paddingVertical: 14,
+                  borderRadius: 12,
+                  backgroundColor: colors.border,
                   alignItems: 'center',
-                  marginBottom: 16,
+                  justifyContent: 'center',
+                  marginTop: 8,
                 }}
-                onPress={handleGenerateCode}
-                disabled={loading}
+                onPress={handleClose}
               >
-                {loading ? (
-                  <ActivityIndicator color="#FFF" />
-                ) : (
-                  <Text style={{ color: '#FFF', fontWeight: '600' }}>
-                    🔑 Generar código
-                  </Text>
-                )}
+                <Text style={styles.modalButtonText}>Cerrar</Text>
               </Pressable>
             </View>
-          )}
-
-          {/* Botón cerrar */}
-          <Pressable
-            style={{
-              paddingVertical: 14,
-              borderRadius: 12,
-              backgroundColor: colors.border,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 8,
-            }}
-            onPress={handleClose}
-          >
-            <Text style={styles.modalButtonText}>Cerrar</Text>
-          </Pressable>
+          </TouchableWithoutFeedback>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -347,110 +351,114 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={handleClose}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}><Ionicons name="enter" size={20} /> Unirse a Quiz</Text>
+      <TouchableWithoutFeedback onPress={handleClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}><Ionicons name="enter" size={20} /> Unirse a Quiz</Text>
 
-          <Text style={{
-            color: colors.textSecondary,
-            textAlign: 'center',
-            marginBottom: 20,
-          }}>
-            Ingresa el código que te compartieron
-          </Text>
+              <Text style={{
+                color: colors.textSecondary,
+                textAlign: 'center',
+                marginBottom: 20,
+              }}>
+                Ingresa el código que te compartieron
+              </Text>
 
-          {/* Input de código */}
-          <TextInput
-            style={[styles.input, {
-              fontSize: 28,
-              textAlign: 'center',
-              letterSpacing: 6,
-              fontWeight: '700',
-            }]}
-            placeholder="ABC123"
-            placeholderTextColor={colors.textMuted}
-            value={code}
-            onChangeText={handleCodeChange}
-            maxLength={6}
-            autoCapitalize="characters"
-            autoCorrect={false}
-          />
+              {/* Input de código */}
+              <TextInput
+                style={[styles.input, {
+                  fontSize: 28,
+                  textAlign: 'center',
+                  letterSpacing: 6,
+                  fontWeight: '700',
+                }]}
+                placeholder="ABC123"
+                placeholderTextColor={colors.textMuted}
+                value={code}
+                onChangeText={handleCodeChange}
+                maxLength={6}
+                autoCapitalize="characters"
+                autoCorrect={false}
+              />
 
-          {error && (
-            <Text style={{
-              color: colors.danger,
-              textAlign: 'center',
-              marginTop: 8,
-            }}>
-              {error}
-            </Text>
-          )}
-
-          {/* Info del quiz encontrado */}
-          {quizInfo && (
-            <View style={{
-              backgroundColor: colors.successLight,
-              borderRadius: 12,
-              padding: 16,
-              marginTop: 16,
-            }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-                <Ionicons name="checkmark-circle" size={18} color={colors.success} />
+              {error && (
                 <Text style={{
-                  fontSize: 16,
-                  fontWeight: '600',
-                  color: colors.textPrimary,
-                  marginLeft: 6,
+                  color: colors.danger,
+                  textAlign: 'center',
+                  marginTop: 8,
                 }}>
-                  {quizInfo.title}
+                  {error}
                 </Text>
+              )}
+
+              {/* Info del quiz encontrado */}
+              {quizInfo && (
+                <View style={{
+                  backgroundColor: colors.successLight,
+                  borderRadius: 12,
+                  padding: 16,
+                  marginTop: 16,
+                }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                    <Ionicons name="checkmark-circle" size={18} color={colors.success} />
+                    <Text style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: colors.textPrimary,
+                      marginLeft: 6,
+                    }}>
+                      {quizInfo.title}
+                    </Text>
+                  </View>
+                  <Text style={{ color: colors.textSecondary }}>
+                    Por: {quizInfo.owner_name}
+                  </Text>
+                  <Text style={{ color: colors.textMuted, fontSize: 12, marginTop: 4 }}>
+                    {quizInfo.question_count} pregunta{quizInfo.question_count !== 1 ? 's' : ''}
+                  </Text>
+                </View>
+              )}
+
+              {/* Botones */}
+              <View style={[styles.modalButtons, { marginTop: 20 }]}>
+                <Pressable style={styles.modalButtonCancel} onPress={handleClose}>
+                  <Text style={styles.modalButtonText}>Cancelar</Text>
+                </Pressable>
+
+                {quizInfo ? (
+                  <Pressable
+                    style={[styles.modalButtonConfirm, loading && { opacity: 0.5 }]}
+                    onPress={handleJoin}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <ActivityIndicator color="#FFF" size="small" />
+                    ) : (
+                      <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Jugar</Text>
+                    )}
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    style={[
+                      styles.modalButtonConfirm,
+                      (loading || code.length < 6) && { opacity: 0.5 }
+                    ]}
+                    onPress={handleSearchQuiz}
+                    disabled={loading || code.length < 6}
+                  >
+                    {loading ? (
+                      <ActivityIndicator color="#FFF" size="small" />
+                    ) : (
+                      <Text style={styles.modalButtonText}>Buscar</Text>
+                    )}
+                  </Pressable>
+                )}
               </View>
-              <Text style={{ color: colors.textSecondary }}>
-                Por: {quizInfo.owner_name}
-              </Text>
-              <Text style={{ color: colors.textMuted, fontSize: 12, marginTop: 4 }}>
-                {quizInfo.question_count} pregunta{quizInfo.question_count !== 1 ? 's' : ''}
-              </Text>
             </View>
-          )}
-
-          {/* Botones */}
-          <View style={[styles.modalButtons, { marginTop: 20 }]}>
-            <Pressable style={styles.modalButtonCancel} onPress={handleClose}>
-              <Text style={styles.modalButtonText}>Cancelar</Text>
-            </Pressable>
-
-            {quizInfo ? (
-              <Pressable
-                style={[styles.modalButtonConfirm, loading && { opacity: 0.5 }]}
-                onPress={handleJoin}
-                disabled={loading}
-              >
-                {loading ? (
-                  <ActivityIndicator color="#FFF" size="small" />
-                ) : (
-                  <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Jugar</Text>
-                )}
-              </Pressable>
-            ) : (
-              <Pressable
-                style={[
-                  styles.modalButtonConfirm,
-                  (loading || code.length < 6) && { opacity: 0.5 }
-                ]}
-                onPress={handleSearchQuiz}
-                disabled={loading || code.length < 6}
-              >
-                {loading ? (
-                  <ActivityIndicator color="#FFF" size="small" />
-                ) : (
-                  <Text style={styles.modalButtonText}>Buscar</Text>
-                )}
-              </Pressable>
-            )}
-          </View>
+          </TouchableWithoutFeedback>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

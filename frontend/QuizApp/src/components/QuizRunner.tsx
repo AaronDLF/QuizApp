@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { View, Text, Pressable, TextInput, ScrollView, Modal } from 'react-native';
+import { View, Text, Pressable, TextInput, ScrollView, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
@@ -478,180 +478,186 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
-      <View style={styles.modalOverlay}>
-        <ScrollView contentContainerStyle={styles.modalScrollContent}>
-          <View style={styles.modalContentLarge}>
-            <Text style={styles.modalTitle}><Ionicons name="settings" size={20} /> Configurar Quiz</Text>
+      <TouchableWithoutFeedback onPress={onCancel}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={{ width: '90%', maxWidth: 400 }}>
+              <ScrollView contentContainerStyle={styles.modalScrollContent}>
+                <View style={styles.modalContentLarge}>
+                  <Text style={styles.modalTitle}><Ionicons name="settings" size={20} /> Configurar Quiz</Text>
 
-            {/* Info del quiz */}
-            <View style={{
-              backgroundColor: colors.primaryLight,
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 20,
-            }}>
-              <Text style={{
-                fontSize: 18,
-                fontWeight: '600',
-                color: colors.textPrimary,
-                marginBottom: 4,
-              }}>
-                {quizTitle}
-              </Text>
-              <Text style={{ color: colors.textSecondary }}>
-                {cardCount} pregunta{cardCount !== 1 ? 's' : ''}
-              </Text>
-            </View>
-
-            {/* Opción: Tiempo límite */}
-            <View style={{ marginBottom: 20 }}>
-              <Pressable
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  marginBottom: 12,
-                }}
-                onPress={handleToggleTimeLimit}
-              >
-                <View style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: 6,
-                  borderWidth: 2,
-                  borderColor: hasTimeLimit ? colors.primary : colors.borderStrong,
-                  backgroundColor: hasTimeLimit ? colors.primary : 'transparent',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginRight: 12,
-                }}>
-                  {hasTimeLimit && (
-                    <Ionicons name="checkmark" size={16} color="#FFF" />
-                  )}
-                </View>
-                <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
-                  Tiempo limite
-                </Text>
-              </Pressable>
-
-              {hasTimeLimit && (
-                <View style={{ marginLeft: 36 }}>
+                  {/* Info del quiz */}
                   <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
+                    backgroundColor: colors.primaryLight,
+                    borderRadius: 12,
+                    padding: 16,
+                    marginBottom: 20,
                   }}>
-                    <TextInput
-                      style={[styles.input, {
-                        width: 80,
-                        textAlign: 'center',
-                        marginBottom: 0,
-                        marginRight: 8,
-                        borderColor: timeError ? colors.danger : colors.border,
-                      }]}
-                      value={timeMinutes}
-                      onChangeText={handleTimeChange}
-                      keyboardType="decimal-pad"
-                      maxLength={6}
-                    />
-                    <Text style={{ color: colors.textSecondary }}>minutos</Text>
+                    <Text style={{
+                      fontSize: 18,
+                      fontWeight: '600',
+                      color: colors.textPrimary,
+                      marginBottom: 4,
+                    }}>
+                      {quizTitle}
+                    </Text>
+                    <Text style={{ color: colors.textSecondary }}>
+                      {cardCount} pregunta{cardCount !== 1 ? 's' : ''}
+                    </Text>
                   </View>
-                  {timeError && (
+
+                  {/* Opción: Tiempo límite */}
+                  <View style={{ marginBottom: 20 }}>
+                    <Pressable
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginBottom: 12,
+                      }}
+                      onPress={handleToggleTimeLimit}
+                    >
+                      <View style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 6,
+                        borderWidth: 2,
+                        borderColor: hasTimeLimit ? colors.primary : colors.borderStrong,
+                        backgroundColor: hasTimeLimit ? colors.primary : 'transparent',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: 12,
+                      }}>
+                        {hasTimeLimit && (
+                          <Ionicons name="checkmark" size={16} color="#FFF" />
+                        )}
+                      </View>
+                      <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+                        Tiempo limite
+                      </Text>
+                    </Pressable>
+
+                    {hasTimeLimit && (
+                      <View style={{ marginLeft: 36 }}>
+                        <View style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                          <TextInput
+                            style={[styles.input, {
+                              width: 80,
+                              textAlign: 'center',
+                              marginBottom: 0,
+                              marginRight: 8,
+                              borderColor: timeError ? colors.danger : colors.border,
+                            }]}
+                            value={timeMinutes}
+                            onChangeText={handleTimeChange}
+                            keyboardType="decimal-pad"
+                            maxLength={6}
+                          />
+                          <Text style={{ color: colors.textSecondary }}>minutos</Text>
+                        </View>
+                        {timeError && (
+                          <Text style={{
+                            color: colors.danger,
+                            fontSize: 12,
+                            marginTop: 4,
+                          }}>
+                            {timeError}
+                          </Text>
+                        )}
+                      </View>
+                    )}
+                  </View>
+
+                  {/* Opción: Mezclar preguntas */}
+                  <Pressable
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: 16,
+                    }}
+                    onPress={() => setShuffleQuestions(!shuffleQuestions)}
+                  >
+                    <View style={{
+                      width: 24,
+                      height: 24,
+                      borderRadius: 6,
+                      borderWidth: 2,
+                      borderColor: shuffleQuestions ? colors.primary : colors.borderStrong,
+                      backgroundColor: shuffleQuestions ? colors.primary : 'transparent',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: 12,
+                    }}>
+                      {shuffleQuestions && (
+                        <Ionicons name="checkmark" size={16} color="#FFF" />
+                      )}
+                    </View>
+                    <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+                      Mezclar preguntas
+                    </Text>
+                  </Pressable>
+
+                  {/* Opción: Mezclar opciones */}
+                  <Pressable
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: 24,
+                    }}
+                    onPress={() => setShuffleOptions(!shuffleOptions)}
+                  >
+                    <View style={{
+                      width: 24,
+                      height: 24,
+                      borderRadius: 6,
+                      borderWidth: 2,
+                      borderColor: shuffleOptions ? colors.primary : colors.borderStrong,
+                      backgroundColor: shuffleOptions ? colors.primary : 'transparent',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      marginRight: 12,
+                    }}>
+                      {shuffleOptions && (
+                        <Ionicons name="checkmark" size={16} color="#FFF" />
+                      )}
+                    </View>
+                    <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
+                      Mezclar opciones
+                    </Text>
+                  </Pressable>
+
+                  {/* Botones */}
+                  <View style={styles.modalButtons}>
+                    <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
+                      <Text style={styles.modalButtonText}>Cancelar</Text>
+                    </Pressable>
+                    <Pressable
+                      style={[styles.modalButtonConfirm, (cardCount === 0 || (hasTimeLimit && timeError)) && { opacity: 0.5 }]}
+                      onPress={handleStart}
+                      disabled={cardCount === 0 || (hasTimeLimit && !!timeError)}
+                    >
+                      <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Iniciar</Text>
+                    </Pressable>
+                  </View>
+
+                  {cardCount === 0 && (
                     <Text style={{
                       color: colors.danger,
-                      fontSize: 12,
-                      marginTop: 4,
+                      textAlign: 'center',
+                      marginTop: 12,
+                      fontSize: 14,
                     }}>
-                      {timeError}
+                      Este quiz no tiene preguntas
                     </Text>
                   )}
                 </View>
-              )}
+              </ScrollView>
             </View>
-
-            {/* Opción: Mezclar preguntas */}
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 16,
-              }}
-              onPress={() => setShuffleQuestions(!shuffleQuestions)}
-            >
-              <View style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
-                borderWidth: 2,
-                borderColor: shuffleQuestions ? colors.primary : colors.borderStrong,
-                backgroundColor: shuffleQuestions ? colors.primary : 'transparent',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 12,
-              }}>
-                {shuffleQuestions && (
-                  <Ionicons name="checkmark" size={16} color="#FFF" />
-                )}
-              </View>
-              <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
-                Mezclar preguntas
-              </Text>
-            </Pressable>
-
-            {/* Opción: Mezclar opciones */}
-            <Pressable
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: 24,
-              }}
-              onPress={() => setShuffleOptions(!shuffleOptions)}
-            >
-              <View style={{
-                width: 24,
-                height: 24,
-                borderRadius: 6,
-                borderWidth: 2,
-                borderColor: shuffleOptions ? colors.primary : colors.borderStrong,
-                backgroundColor: shuffleOptions ? colors.primary : 'transparent',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 12,
-              }}>
-                {shuffleOptions && (
-                  <Ionicons name="checkmark" size={16} color="#FFF" />
-                )}
-              </View>
-              <Text style={{ color: colors.textPrimary, fontSize: 16 }}>
-                Mezclar opciones
-              </Text>
-            </Pressable>
-
-            {/* Botones */}
-            <View style={styles.modalButtons}>
-              <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
-                <Text style={styles.modalButtonText}>Cancelar</Text>
-              </Pressable>
-              <Pressable
-                style={[styles.modalButtonConfirm, (cardCount === 0 || (hasTimeLimit && timeError)) && { opacity: 0.5 }]}
-                onPress={handleStart}
-                disabled={cardCount === 0 || (hasTimeLimit && !!timeError)}
-              >
-                <Text style={styles.modalButtonText}><Ionicons name="play" size={14} /> Iniciar</Text>
-              </Pressable>
-            </View>
-
-            {cardCount === 0 && (
-              <Text style={{
-                color: colors.danger,
-                textAlign: 'center',
-                marginTop: 12,
-                fontSize: 14,
-              }}>
-                Este quiz no tiene preguntas
-              </Text>
-            )}
-          </View>
-        </ScrollView>
-      </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -676,100 +682,106 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.modalOverlay}>
-        <ScrollView contentContainerStyle={styles.modalScrollContent}>
-          <View style={styles.modalContentLarge}>
-            <Text style={styles.modalTitle}><Ionicons name="stats-chart" size={20} /> Resultados</Text>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={{ width: '90%', maxWidth: 400 }}>
+              <ScrollView contentContainerStyle={styles.modalScrollContent}>
+                <View style={styles.modalContentLarge}>
+                  <Text style={styles.modalTitle}><Ionicons name="stats-chart" size={20} /> Resultados</Text>
 
-            {/* Puntuación principal */}
-            <View style={{
-              alignItems: 'center',
-              marginBottom: 24,
-            }}>
-              <Ionicons name={getScoreIcon(result.score) as any} size={60} color={getScoreColor(result.score)} />
-              <Text style={{
-                fontSize: 48,
-                fontWeight: '700',
-                color: getScoreColor(result.score),
-              }}>
-                {result.score}%
-              </Text>
-              <Text style={{
-                fontSize: 16,
-                color: colors.textSecondary,
-                textAlign: 'center',
-                marginTop: 4,
-              }}>
-                {getScoreMessage(result.score)}
-              </Text>
-            </View>
+                  {/* Puntuación principal */}
+                  <View style={{
+                    alignItems: 'center',
+                    marginBottom: 24,
+                  }}>
+                    <Ionicons name={getScoreIcon(result.score) as any} size={60} color={getScoreColor(result.score)} />
+                    <Text style={{
+                      fontSize: 48,
+                      fontWeight: '700',
+                      color: getScoreColor(result.score),
+                    }}>
+                      {result.score}%
+                    </Text>
+                    <Text style={{
+                      fontSize: 16,
+                      color: colors.textSecondary,
+                      textAlign: 'center',
+                      marginTop: 4,
+                    }}>
+                      {getScoreMessage(result.score)}
+                    </Text>
+                  </View>
 
-            {/* Estadísticas */}
-            <View style={{
-              backgroundColor: colors.cardBackground,
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 20,
-            }}>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 12,
-              }}>
-                <Text style={{ color: colors.textSecondary }}>Correctas</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons name="checkmark" size={16} color={colors.success} />
-                  <Text style={{ color: colors.success, fontWeight: '600', marginLeft: 4 }}>
-                    {result.correctAnswers}
-                  </Text>
+                  {/* Estadísticas */}
+                  <View style={{
+                    backgroundColor: colors.cardBackground,
+                    borderRadius: 12,
+                    padding: 16,
+                    marginBottom: 20,
+                  }}>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginBottom: 12,
+                    }}>
+                      <Text style={{ color: colors.textSecondary }}>Correctas</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="checkmark" size={16} color={colors.success} />
+                        <Text style={{ color: colors.success, fontWeight: '600', marginLeft: 4 }}>
+                          {result.correctAnswers}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginBottom: 12,
+                    }}>
+                      <Text style={{ color: colors.textSecondary }}>Incorrectas</Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Ionicons name="close" size={16} color={colors.danger} />
+                        <Text style={{ color: colors.danger, fontWeight: '600', marginLeft: 4 }}>
+                          {result.incorrectAnswers}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      marginBottom: 12,
+                    }}>
+                      <Text style={{ color: colors.textSecondary }}>Total preguntas</Text>
+                      <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
+                        {result.totalQuestions}
+                      </Text>
+                    </View>
+                    <View style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                      <Text style={{ color: colors.textSecondary }}>Tiempo total</Text>
+                      <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
+                        <Ionicons name="time-outline" size={14} /> {formatTimeVerbose(result.totalTime)}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {/* Botones */}
+                  <View style={styles.modalButtons}>
+                    <Pressable style={styles.modalButtonCancel} onPress={onRetry}>
+                      <Text style={styles.modalButtonText}><Ionicons name="refresh" size={14} /> Reintentar</Text>
+                    </Pressable>
+                    <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
+                      <Text style={styles.modalButtonText}>Cerrar</Text>
+                    </Pressable>
+                  </View>
                 </View>
-              </View>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 12,
-              }}>
-                <Text style={{ color: colors.textSecondary }}>Incorrectas</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Ionicons name="close" size={16} color={colors.danger} />
-                  <Text style={{ color: colors.danger, fontWeight: '600', marginLeft: 4 }}>
-                    {result.incorrectAnswers}
-                  </Text>
-                </View>
-              </View>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                marginBottom: 12,
-              }}>
-                <Text style={{ color: colors.textSecondary }}>Total preguntas</Text>
-                <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
-                  {result.totalQuestions}
-                </Text>
-              </View>
-              <View style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-                <Text style={{ color: colors.textSecondary }}>Tiempo total</Text>
-                <Text style={{ color: colors.textPrimary, fontWeight: '600' }}>
-                  <Ionicons name="time-outline" size={14} /> {formatTimeVerbose(result.totalTime)}
-                </Text>
-              </View>
+              </ScrollView>
             </View>
-
-            {/* Botones */}
-            <View style={styles.modalButtons}>
-              <Pressable style={styles.modalButtonCancel} onPress={onRetry}>
-                <Text style={styles.modalButtonText}><Ionicons name="refresh" size={14} /> Reintentar</Text>
-              </Pressable>
-              <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
-                <Text style={styles.modalButtonText}>Cerrar</Text>
-              </Pressable>
-            </View>
-          </View>
-        </ScrollView>
-      </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
