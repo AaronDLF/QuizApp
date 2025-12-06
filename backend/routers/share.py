@@ -166,6 +166,7 @@ async def get_shared_quiz_full(
         questions_response.append(QuestionResponse(
             id=question.id,
             question_text=question.question_text,
+            answer_type=question.answer_type,
             quiz_id=question.quiz_id,
             choices=[ChoiceResponse(
                 id=c.id,

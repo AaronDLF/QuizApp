@@ -87,7 +87,7 @@ export const deleteQuiz = async (id: number): Promise<void> => {
 // Agregar pregunta a un quiz
 export const addQuestionToQuiz = async (
   quizId: number,
-  question: { question_text: string; choices: ChoiceAPI[] }
+  question: { question_text: string; answer_type: string; choices: ChoiceAPI[] }
 ): Promise<QuestionAPI> => {
   const response = await fetch(`${API_URL}/quizzes/${quizId}/questions/`, {
     method: 'POST',

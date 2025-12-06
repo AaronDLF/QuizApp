@@ -118,10 +118,10 @@ export default function Home() {
     cards: q.questions.map(question => ({
       id: question.id?.toString() || '',
       question: question.question_text,
-      answerType: question.choices.length > 0 ? 'options' : 'text',
+      answerType: (question.answer_type === 'text' ? 'text' : 'options') as AnswerType,
       options: question.choices.map(c => c.choice_text),
       correctOption: question.choices.findIndex(c => c.is_correct),
-      textAnswer: question.choices.length === 0 ? '' : undefined,
+      textAnswer: question.answer_type === 'text' ? (question.choices[0]?.choice_text || '') : undefined,
     })),
   });
 
@@ -229,19 +229,20 @@ export default function Home() {
       // Preparar las choices según el tipo de respuesta
       const choices = newCardAnswerType === 'options'
         ? newCardOptions
-            .filter(opt => opt.trim() !== '')
-            .map((opt, index) => ({
-              choice_text: opt,
-              is_correct: index === newCardCorrectOption,
-            }))
+          .filter(opt => opt.trim() !== '')
+          .map((opt, index) => ({
+            choice_text: opt,
+            is_correct: index === newCardCorrectOption,
+          }))
         : [{
-            choice_text: newCardTextAnswer,
-            is_correct: true,
-          }];
+          choice_text: newCardTextAnswer,
+          is_correct: true,
+        }];
 
       // Agregar la pregunta al quiz
       const newQuestion = await addQuestionToQuiz(parseInt(selectedQuiz.id), {
         question_text: newCardQuestion,
+        answer_type: newCardAnswerType,
         choices,
       });
 
@@ -352,15 +353,15 @@ export default function Home() {
       // Preparar las choices según el tipo de respuesta
       const choices = editCardAnswerType === 'options'
         ? editCardOptions
-            .filter(opt => opt.trim() !== '')
-            .map((opt, index) => ({
-              choice_text: opt,
-              is_correct: index === editCardCorrectOption,
-            }))
+          .filter(opt => opt.trim() !== '')
+          .map((opt, index) => ({
+            choice_text: opt,
+            is_correct: index === editCardCorrectOption,
+          }))
         : [{
-            choice_text: editCardTextAnswer,
-            is_correct: true,
-          }];
+          choice_text: editCardTextAnswer,
+          is_correct: true,
+        }];
 
       // Actualizar la pregunta en el backend
       const updatedQuestion = await updateQuestion(parseInt(selectedCard.id), {

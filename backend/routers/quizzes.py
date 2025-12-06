@@ -58,6 +58,7 @@ async def get_quiz(quiz_id: int, db: db_dependency, current_user: current_user_d
         questions_response.append(QuestionResponse(
             id=question.id,
             question_text=question.question_text,
+            answer_type=question.answer_type,
             quiz_id=question.quiz_id,
             choices=[ChoiceResponse(
                 id=c.id,
@@ -118,6 +119,7 @@ async def update_quiz(quiz_id: int, quiz_data: QuizBase, db: db_dependency, curr
         questions_response.append(QuestionResponse(
             id=question.id,
             question_text=question.question_text,
+            answer_type=question.answer_type,
             quiz_id=question.quiz_id,
             choices=[ChoiceResponse(
                 id=c.id,
@@ -146,6 +148,12 @@ async def delete_quiz(quiz_id: int, db: db_dependency, current_user: current_use
 
     if not quiz:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Quiz not found")
+
+    # Desasociar el quiz del historial (establecer quiz_id a NULL para preservar el historial)
+    db.query(models.QuizHistory).filter(models.QuizHistory.quiz_id == quiz_id).update(
+        {"quiz_id": None},
+        synchronize_session=False
+    )
 
     # Eliminar choices de todas las preguntas del quiz
     questions = db.query(models.Questions).filter(models.Questions.quiz_id == quiz_id).all()
@@ -182,6 +190,7 @@ async def add_question_to_quiz(
     # Crear la pregunta
     db_question = models.Questions(
         question_text=question.question_text,
+        answer_type=question.answer_type,
         quiz_id=quiz_id
     )
     db.add(db_question)
@@ -204,6 +213,7 @@ async def add_question_to_quiz(
     return QuestionResponse(
         id=db_question.id,
         question_text=db_question.question_text,
+        answer_type=db_question.answer_type,
         quiz_id=db_question.quiz_id,
         choices=[ChoiceResponse(
             id=c.id,

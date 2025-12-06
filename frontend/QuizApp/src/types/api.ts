@@ -39,6 +39,7 @@ export interface ChoiceAPI {
 export interface QuestionAPI {
   id?: number;
   question_text: string;
+  answer_type?: string;  // "text" | "options"
   quiz_id?: number;
   choices: ChoiceAPI[];
 }

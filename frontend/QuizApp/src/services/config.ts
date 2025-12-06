@@ -18,7 +18,7 @@ const getApiUrl = (): string => {
 
   // FORZAR PRODUCCIÓN: Siempre usar Railway (útil para pruebas con Expo Go tunnel)
   // Cambiar a 'false' para usar backend local en desarrollo
-  const useProduction = true;
+  const useProduction = false;
 
   // En producción (APK) o si está forzado, usar Railway
   if (!isDev || useProduction) {
