@@ -63,7 +63,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   scrollContent: {
     padding: spacing.xl,
     paddingBottom: normalize(100),
-    maxWidth: 1200,
+    maxWidth: 700,
     alignSelf: 'center',
     width: '100%',
   },
