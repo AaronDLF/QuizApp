@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, Pressable, TextInput, Modal, ScrollView } from 'react-native';
+import { View, Text, Pressable, TextInput, Modal, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createHomeStyles } from '../styles/homeStyles';
 import { useTheme } from '../context/ThemeContext';
@@ -23,26 +23,30 @@ export const NewQuizModal: React.FC<NewQuizModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Nuevo Quiz</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre del quiz"
-            placeholderTextColor={colors.textMuted}
-            value={title}
-            onChangeText={onTitleChange}
-          />
-          <View style={styles.modalButtons}>
-            <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
-              <Text style={styles.modalButtonText}>Cancelar</Text>
-            </Pressable>
-            <Pressable style={styles.modalButtonConfirm} onPress={onCreate}>
-              <Text style={styles.modalButtonText}>Crear</Text>
-            </Pressable>
-          </View>
+      <TouchableWithoutFeedback onPress={onCancel}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Nuevo Quiz</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Nombre del quiz"
+                placeholderTextColor={colors.textMuted}
+                value={title}
+                onChangeText={onTitleChange}
+              />
+              <View style={styles.modalButtons}>
+                <Pressable style={styles.modalButtonCancel} onPress={onCancel}>
+                  <Text style={styles.modalButtonText}>Cancelar</Text>
+                </Pressable>
+                <Pressable style={styles.modalButtonConfirm} onPress={onCreate}>
+                  <Text style={styles.modalButtonText}>Crear</Text>
+                </Pressable>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
@@ -173,59 +177,63 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContentLarge}>
-          <Text style={styles.modalTitle}>
-            <Ionicons name="document-text-outline" size={20} /> Detalle de Card
-          </Text>
+      <TouchableWithoutFeedback onPress={onClose}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={(e) => e.stopPropagation()}>
+            <View style={styles.modalContentLarge}>
+              <Text style={styles.modalTitle}>
+                <Ionicons name="document-text-outline" size={20} /> Detalle de Card
+              </Text>
 
-          {card && (
-            <>
-              <View style={styles.detailSection}>
-                <Text style={styles.detailLabel}>Pregunta:</Text>
-                <Text style={styles.detailText}>{card.question}</Text>
+              {card && (
+                <>
+                  <View style={styles.detailSection}>
+                    <Text style={styles.detailLabel}>Pregunta:</Text>
+                    <Text style={styles.detailText}>{card.question}</Text>
+                  </View>
+
+                  <View style={styles.detailSection}>
+                    <Text style={styles.detailLabel}>
+                      {card.answerType === 'text' ? 'Respuesta:' : 'Opciones:'}
+                    </Text>
+                    {card.answerType === 'text' ? (
+                      <Text style={styles.detailText}>{card.textAnswer}</Text>
+                    ) : (
+                      card.options?.map((option, index) => (
+                        <View key={index} style={styles.detailOption}>
+                          <View style={[
+                            styles.detailOptionIndicator,
+                            card.correctOption === index && styles.detailOptionCorrect
+                          ]}>
+                            {card.correctOption === index && (
+                              <Ionicons name="checkmark" size={14} color="#FFF" />
+                            )}
+                          </View>
+                          <Text style={[
+                            styles.detailOptionText,
+                            card.correctOption === index && styles.detailOptionTextCorrect
+                          ]}>
+                            {option}
+                          </Text>
+                        </View>
+                      ))
+                    )}
+                  </View>
+                </>
+              )}
+
+              <View style={[styles.modalButtons, { marginTop: 20 }]}>
+                <Pressable style={styles.modalButtonCancel} onPress={onEdit}>
+                  <Text style={styles.modalButtonText}><Ionicons name="create-outline" size={14} /> Editar</Text>
+                </Pressable>
+                <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
+                  <Text style={styles.modalButtonText}>Cerrar</Text>
+                </Pressable>
               </View>
-
-              <View style={styles.detailSection}>
-                <Text style={styles.detailLabel}>
-                  {card.answerType === 'text' ? 'Respuesta:' : 'Opciones:'}
-                </Text>
-                {card.answerType === 'text' ? (
-                  <Text style={styles.detailText}>{card.textAnswer}</Text>
-                ) : (
-                  card.options?.map((option, index) => (
-                    <View key={index} style={styles.detailOption}>
-                      <View style={[
-                        styles.detailOptionIndicator,
-                        card.correctOption === index && styles.detailOptionCorrect
-                      ]}>
-                        {card.correctOption === index && (
-                          <Ionicons name="checkmark" size={14} color="#FFF" />
-                        )}
-                      </View>
-                      <Text style={[
-                        styles.detailOptionText,
-                        card.correctOption === index && styles.detailOptionTextCorrect
-                      ]}>
-                        {option}
-                      </Text>
-                    </View>
-                  ))
-                )}
-              </View>
-            </>
-          )}
-
-          <View style={[styles.modalButtons, { marginTop: 20 }]}>
-            <Pressable style={styles.modalButtonCancel} onPress={onEdit}>
-              <Text style={styles.modalButtonText}><Ionicons name="create-outline" size={14} /> Editar</Text>
-            </Pressable>
-            <Pressable style={styles.modalButtonConfirm} onPress={onClose}>
-              <Text style={styles.modalButtonText}>Cerrar</Text>
-            </Pressable>
-          </View>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
