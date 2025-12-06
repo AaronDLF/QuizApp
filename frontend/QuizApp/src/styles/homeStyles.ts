@@ -63,7 +63,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
   scrollContent: {
     padding: spacing.xl,
     paddingBottom: normalize(100),
-    maxWidth: 700,
+    maxWidth: 1200,
     alignSelf: 'center',
     width: '100%',
   },
@@ -167,7 +167,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: spacing.xl,
     padding: spacing.xxl,
     width: '90%',
-    maxWidth: 600,
+    maxWidth: 800,
     alignSelf: 'center',
   },
   modalContentLarge: {
@@ -175,7 +175,7 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     borderRadius: spacing.xl,
     padding: spacing.xxl,
     width: '90%',
-    maxWidth: 800,
+    maxWidth: 1000,
     alignSelf: 'center',
   },
   modalTitle: {
