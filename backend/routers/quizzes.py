@@ -118,6 +118,7 @@ async def update_quiz(quiz_id: int, quiz_data: QuizBase, db: db_dependency, curr
         questions_response.append(QuestionResponse(
             id=question.id,
             question_text=question.question_text,
+            answer_type=question.answer_type,
             quiz_id=question.quiz_id,
             choices=[ChoiceResponse(
                 id=c.id,
@@ -182,6 +183,7 @@ async def add_question_to_quiz(
     # Crear la pregunta
     db_question = models.Questions(
         question_text=question.question_text,
+        answer_type=question.answer_type,
         quiz_id=quiz_id
     )
     db.add(db_question)
@@ -204,6 +206,7 @@ async def add_question_to_quiz(
     return QuestionResponse(
         id=db_question.id,
         question_text=db_question.question_text,
+        answer_type=db_question.answer_type,
         quiz_id=db_question.quiz_id,
         choices=[ChoiceResponse(
             id=c.id,
