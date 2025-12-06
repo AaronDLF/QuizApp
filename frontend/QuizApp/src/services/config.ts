@@ -16,8 +16,19 @@ const getApiUrl = (): string => {
   // @ts-ignore - __DEV__ es una variable global de React Native
   const isDev = typeof __DEV__ !== 'undefined' ? __DEV__ : process.env.NODE_ENV === 'development';
 
+  // Detectar si estamos en producción web (Railway)
+  if (Platform.OS === 'web') {
+    const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+    // Si estamos en un dominio de Railway o no es localhost, usar producción
+    if (hostname.includes('railway.app') || (hostname !== 'localhost' && hostname !== '127.0.0.1')) {
+      return PRODUCTION_URL;
+    }
+    // En desarrollo local web
+    return 'http://127.0.0.1:8000';
+  }
+
   // FORZAR PRODUCCIÓN: Siempre usar Railway (útil para pruebas con Expo Go tunnel)
-  // Cambiar a 'false' para usar backend local en desarrollo
+  // Cambiar a 'true' para usar backend de Railway en desarrollo móvil
   const useProduction = false;
 
   // En producción (APK) o si está forzado, usar Railway
@@ -25,10 +36,7 @@ const getApiUrl = (): string => {
     return PRODUCTION_URL;
   }
 
-  // En desarrollo local, usar localhost/IP local
-  if (Platform.OS === 'web') {
-    return 'http://127.0.0.1:8000';
-  }
+  // En desarrollo local móvil, usar IP local
   return `http://${LOCAL_IP}:8000`;
 };
 
