@@ -156,6 +156,10 @@ export const createHomeStyles = (colors: ThemeColors) => StyleSheet.create({
     alignItems: 'center',
     padding: spacing.xl,
   },
+  modalScrollView: {
+    width: '100%',
+    maxHeight: '100%',
+  },
   modalScrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
