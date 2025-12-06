@@ -18,12 +18,14 @@ class ChoiceResponse(ChoiceBase):
 
 class QuestionBase(BaseModel):
     question_text: str
+    answer_type: str = "options"  # "text" o "options"
     choices: List[ChoiceBase] = []
 
 
 class QuestionResponse(BaseModel):
     id: int
     question_text: str
+    answer_type: str
     quiz_id: int | None
     choices: List[ChoiceResponse]
 

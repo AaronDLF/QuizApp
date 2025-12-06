@@ -26,7 +26,7 @@ interface UseQuizzesReturn {
   updateQuiz: (id: number, title: string) => Promise<QuizAPI>;
   deleteQuiz: (id: number) => Promise<void>;
   addQuestion: (quizId: number, question: { question_text: string; choices: ChoiceAPI[] }) => Promise<QuestionAPI>;
-  updateQuestion: (questionId: number, question: { question_text: string; choices: ChoiceAPI[] }) => Promise<QuestionAPI>;
+  updateQuestion: (questionId: number, question: { question_text: string; answer_type: string; choices: ChoiceAPI[] }) => Promise<QuestionAPI>;
   deleteQuestion: (questionId: number) => Promise<void>;
   clearError: () => void;
   setCurrentQuiz: (quiz: QuizAPI | null) => void;
@@ -154,7 +154,7 @@ export const useQuizzes = (): UseQuizzesReturn => {
 
   const updateQuestion = useCallback(async (
     questionId: number,
-    question: { question_text: string; choices: ChoiceAPI[] }
+    question: { question_text: string; answer_type: string; choices: ChoiceAPI[] }
   ): Promise<QuestionAPI> => {
     setIsLoading(true);
     setError(null);

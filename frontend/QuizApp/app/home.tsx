@@ -365,6 +365,7 @@ export default function Home() {
       // Actualizar la pregunta en el backend
       const updatedQuestion = await updateQuestion(parseInt(selectedCard.id), {
         question_text: editCardQuestion,
+        answer_type: editCardAnswerType,
         choices,
       });
 

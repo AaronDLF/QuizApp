@@ -29,6 +29,7 @@ class Questions(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     question_text = Column(String, index=True)
+    answer_type = Column(String, default="options")  # "text" o "options"
     quiz_id = Column(Integer, ForeignKey("quizzes.id"))
 
 

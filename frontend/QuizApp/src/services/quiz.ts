@@ -106,7 +106,7 @@ export const addQuestionToQuiz = async (
 // Actualizar una pregunta
 export const updateQuestion = async (
   questionId: number,
-  question: { question_text: string; choices: ChoiceAPI[] }
+  question: { question_text: string; answer_type: string; choices: ChoiceAPI[] }
 ): Promise<QuestionAPI> => {
   const response = await fetch(`${API_URL}/questions/${questionId}`, {
     method: 'PUT',

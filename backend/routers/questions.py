@@ -34,6 +34,7 @@ async def update_question(
 
     # Actualizar texto
     question.question_text = question_data.question_text
+    question.answer_type = question_data.answer_type  # Actualizar tipo de respuesta
 
     # Eliminar opciones antiguas
     db.query(models.Choices).filter(models.Choices.question_id == question_id).delete()
