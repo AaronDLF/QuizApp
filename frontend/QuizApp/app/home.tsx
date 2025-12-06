@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ActivityIndicator, BackHandler } from 'react-native';
+import { View, Text, Pressable, ActivityIndicator, BackHandler, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -103,17 +103,41 @@ export default function Home() {
     initAuth();
   }, []);
 
-  // Manejar el gesto/botón de retroceso en dispositivos móviles
+  // Manejar el gesto/botón de retroceso en dispositivos móviles y web
   useEffect(() => {
+    // Para móviles (Android)
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      // Si hay un quiz seleccionado, volver a la lista de quizzes
       if (selectedQuiz) {
         setSelectedQuiz(null);
-        return true; // Prevenir comportamiento por defecto
+        return true;
       }
-      // Si estamos en la lista principal, bloquear retroceso (no volver a login)
-      return true; // Prevenir comportamiento por defecto
+      return true; // Bloquear retroceso en lista principal
     });
+
+    // Para web - manejar el botón atrás del navegador
+    if (Platform.OS === 'web') {
+      // Agregar entrada al historial para poder interceptar el retroceso
+      window.history.pushState({ page: 'home' }, '', window.location.href);
+
+      const handlePopState = (event: PopStateEvent) => {
+        if (selectedQuiz) {
+          // Si hay quiz seleccionado, volver a la lista
+          setSelectedQuiz(null);
+          // Agregar nueva entrada para mantener el control del historial
+          window.history.pushState({ page: 'home' }, '', window.location.href);
+        } else {
+          // Si estamos en la lista principal, prevenir navegación a login
+          window.history.pushState({ page: 'home' }, '', window.location.href);
+        }
+      };
+
+      window.addEventListener('popstate', handlePopState);
+
+      return () => {
+        backHandler.remove();
+        window.removeEventListener('popstate', handlePopState);
+      };
+    }
 
     return () => backHandler.remove();
   }, [selectedQuiz]);
