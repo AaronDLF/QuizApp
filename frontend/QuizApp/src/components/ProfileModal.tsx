@@ -98,7 +98,7 @@ export const ProfileWithHistoryModal: React.FC<ProfileWithHistoryModalProps> = (
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={[styles.modalContentLarge, { maxHeight: hp(80) }]}>
           {/* Tabs */}

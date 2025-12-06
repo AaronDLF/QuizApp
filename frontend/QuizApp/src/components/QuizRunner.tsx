@@ -236,7 +236,7 @@ export const QuizRunner: React.FC<QuizRunnerProps> = ({
   if (!visible || !currentCard) return null;
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={visible} animationType="slide" onRequestClose={onCancel}>
       <View style={[styles.container, { paddingTop: 50 }]}>
         {/* Header con progreso y tiempo */}
         <View style={[styles.header, { paddingTop: 0 }]}>
@@ -466,7 +466,7 @@ export const QuizConfigModal: React.FC<QuizConfigModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
@@ -664,7 +664,7 @@ export const QuizResultModal: React.FC<QuizResultModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>

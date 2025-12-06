@@ -98,7 +98,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={handleClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}><Ionicons name="share-social" size={20} /> Compartir</Text>
@@ -327,7 +327,7 @@ export const JoinQuizModal: React.FC<JoinQuizModalProps> = ({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={handleClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}><Ionicons name="enter" size={20} /> Unirse a Quiz</Text>

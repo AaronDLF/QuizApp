@@ -22,7 +22,7 @@ export const NewQuizModal: React.FC<NewQuizModalProps> = ({
   const styles = useMemo(() => createHomeStyles(colors), [colors]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Nuevo Quiz</Text>
@@ -67,7 +67,7 @@ export const NewCardModal: React.FC<NewCardModalProps> = ({
   const styles = useMemo(() => createHomeStyles(colors), [colors]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
@@ -172,7 +172,7 @@ export const CardDetailModal: React.FC<CardDetailModalProps> = ({
   const styles = useMemo(() => createHomeStyles(colors), [colors]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View style={styles.modalOverlay}>
         <View style={styles.modalContentLarge}>
           <Text style={styles.modalTitle}>
@@ -250,7 +250,7 @@ export const EditCardModal: React.FC<EditCardModalProps> = ({
   const styles = useMemo(() => createHomeStyles(colors), [colors]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade">
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onCancel}>
       <View style={styles.modalOverlay}>
         <ScrollView contentContainerStyle={styles.modalScrollContent}>
           <View style={styles.modalContentLarge}>
