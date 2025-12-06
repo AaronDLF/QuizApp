@@ -107,11 +107,62 @@ export default function Home() {
   useEffect(() => {
     // Para móviles (Android)
     const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      // Primero: cerrar modales abiertas
+      if (showCardDetailModal) {
+        setShowCardDetailModal(false);
+        setSelectedCard(null);
+        return true;
+      }
+      if (showEditCardModal) {
+        setShowEditCardModal(false);
+        setSelectedCard(null);
+        return true;
+      }
+      if (showNewCardModal) {
+        setShowNewCardModal(false);
+        return true;
+      }
+      if (showNewQuizModal) {
+        setShowNewQuizModal(false);
+        return true;
+      }
+      if (showProfileModal) {
+        setShowProfileModal(false);
+        return true;
+      }
+      if (showShareModal) {
+        setShowShareModal(false);
+        setQuizToShare(null);
+        return true;
+      }
+      if (showJoinModal) {
+        setShowJoinModal(false);
+        return true;
+      }
+      if (showQuizConfigModal) {
+        setShowQuizConfigModal(false);
+        setQuizToPlay(null);
+        return true;
+      }
+      if (showQuizResultModal) {
+        setShowQuizResultModal(false);
+        setQuizResult(null);
+        setQuizToPlay(null);
+        return true;
+      }
+      // Si hay QuizRunner abierto, no hacer nada aquí (se maneja internamente)
+      if (showQuizRunner) {
+        return true;
+      }
+
+      // Segundo: si hay quiz seleccionado, volver a la lista de quizzes
       if (selectedQuiz) {
         setSelectedQuiz(null);
         return true;
       }
-      return true; // Bloquear retroceso en lista principal
+
+      // Tercero: bloquear retroceso en lista principal (no volver a login)
+      return true;
     });
 
     // Para web - manejar el botón atrás del navegador
@@ -120,13 +171,24 @@ export default function Home() {
       window.history.pushState({ page: 'home' }, '', window.location.href);
 
       const handlePopState = (event: PopStateEvent) => {
+        // Cerrar modales primero
+        if (showCardDetailModal) {
+          setShowCardDetailModal(false);
+          setSelectedCard(null);
+          window.history.pushState({ page: 'home' }, '', window.location.href);
+          return;
+        }
+        if (showEditCardModal) {
+          setShowEditCardModal(false);
+          setSelectedCard(null);
+          window.history.pushState({ page: 'home' }, '', window.location.href);
+          return;
+        }
+
         if (selectedQuiz) {
-          // Si hay quiz seleccionado, volver a la lista
           setSelectedQuiz(null);
-          // Agregar nueva entrada para mantener el control del historial
           window.history.pushState({ page: 'home' }, '', window.location.href);
         } else {
-          // Si estamos en la lista principal, prevenir navegación a login
           window.history.pushState({ page: 'home' }, '', window.location.href);
         }
       };
@@ -140,7 +202,19 @@ export default function Home() {
     }
 
     return () => backHandler.remove();
-  }, [selectedQuiz]);
+  }, [
+    selectedQuiz,
+    showCardDetailModal,
+    showEditCardModal,
+    showNewCardModal,
+    showNewQuizModal,
+    showProfileModal,
+    showShareModal,
+    showJoinModal,
+    showQuizConfigModal,
+    showQuizResultModal,
+    showQuizRunner,
+  ]);
 
   // Convertir de API a formato local (lista)
   const apiListToQuiz = (q: QuizListAPI): Quiz => ({
