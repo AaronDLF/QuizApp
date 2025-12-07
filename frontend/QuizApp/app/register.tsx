@@ -71,17 +71,25 @@ const createStyles = (colors: ThemeColors, isDark: boolean) => StyleSheet.create
   inputContainer: {
     width: 260,
     marginVertical: 8,
+    position: 'relative',
   },
   input: {
     width: '100%',
     height: 54,
     borderRadius: 14,
     paddingHorizontal: 16,
+    paddingRight: 48,
     fontSize: 16,
     color: colors.textPrimary,
     backgroundColor: colors.cardBackground,
     borderWidth: 1,
     borderColor: colors.borderMedium,
+  },
+  eyeIcon: {
+    position: 'absolute',
+    right: 14,
+    top: 16,
+    padding: 4,
   },
   errorContainer: {
     backgroundColor: colors.dangerLight,
@@ -161,6 +169,8 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -256,9 +266,20 @@ export default function Register() {
           placeholderTextColor={colors.textMuted}
           value={password}
           onChangeText={setPassword}
-          secureTextEntry
+          secureTextEntry={!showPassword}
           editable={!loading}
         />
+        <Pressable
+          style={styles.eyeIcon}
+          onPress={() => setShowPassword(!showPassword)}
+          hitSlop={8}
+        >
+          <Ionicons
+            name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+            size={22}
+            color={colors.textSecondary}
+          />
+        </Pressable>
       </View>
 
       {/* Indicadores de requisitos de contraseña */}
@@ -290,9 +311,20 @@ export default function Register() {
           placeholderTextColor={colors.textMuted}
           value={confirmPassword}
           onChangeText={setConfirmPassword}
-          secureTextEntry
+          secureTextEntry={!showConfirmPassword}
           editable={!loading}
         />
+        <Pressable
+          style={styles.eyeIcon}
+          onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+          hitSlop={8}
+        >
+          <Ionicons
+            name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
+            size={22}
+            color={colors.textSecondary}
+          />
+        </Pressable>
         {confirmPassword.length > 0 && (
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 6 }}>
             <Ionicons
